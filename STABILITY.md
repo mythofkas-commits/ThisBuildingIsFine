@@ -55,6 +55,7 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 
 - The HUD is visible after scene load.
 - The HUD shows Incident Report progress as collected count and total count.
+- The HUD shows Clarity once M5 begins.
 - Collecting a report updates HUD text/status.
 - Restart updates HUD state back to the reset report count.
 
@@ -67,6 +68,15 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - The HUD must clearly tell the player how to complete available extraction.
 - Using active extraction through its displayed interaction triggers a minimal, restrained win/completion state.
 - Restart clears the win state and returns extraction to locked.
+
+### Clarity System
+
+- Clarity starts at 100.
+- Clarity appears in the HUD.
+- Clarity can change through source-defined events.
+- Restart restores Clarity to the baseline value.
+- M5 Clarity must remain subtle, non-punitive, and non-horror.
+- Clarity must not make the HUD unreadable or introduce nausea-inducing effects.
 
 ### Tone Constraints
 

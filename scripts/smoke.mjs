@@ -72,12 +72,13 @@ try {
   await page.goto(smokeUrl, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.__TBIF_DEBUG__?.ready === true);
   await page.waitForTimeout(500);
-  await page.screenshot({ path: resolve(logsDir, "m4-1-reports-before.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m5-reports-before.png"), fullPage: true });
 
   const initialDebug = await page.evaluate(() => window.__TBIF_DEBUG__);
   const initialHud = await page.evaluate(() => ({
     hasHud: Boolean(document.querySelector(".hud")),
     reportText: document.querySelector("[data-hud-report]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? ""
   }));
 
@@ -89,7 +90,9 @@ try {
 
   const afterCollection = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
-    hudText: document.querySelector("[data-hud-report]")?.textContent ?? ""
+    hudText: document.querySelector("[data-hud-report]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? ""
   }));
 
   await page.keyboard.down("d");
@@ -107,6 +110,7 @@ try {
   const lockedExtraction = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -129,6 +133,7 @@ try {
   const afterAllReports = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -142,6 +147,7 @@ try {
   const afterExtractionPrompt = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -150,6 +156,7 @@ try {
   const afterInteractionWin = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -160,9 +167,9 @@ try {
     );
   });
   await page.waitForTimeout(250);
-  await page.screenshot({ path: resolve(logsDir, "m4-1-records-signage.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m5-records-signage.png"), fullPage: true });
 
-  const screenshotPath = resolve(logsDir, "m4-1-smoke.png");
+  const screenshotPath = resolve(logsDir, "m5-smoke.png");
   await page.screenshot({ path: screenshotPath, fullPage: true });
 
   await page.keyboard.press("r");
@@ -190,6 +197,10 @@ try {
 
   if (!initialHud.hasHud || !initialDebug?.hasHud) {
     throw new Error(`Smoke test did not observe HUD on scene load: ${JSON.stringify({ initialHud, initialDebug })}`);
+  }
+
+  if (!initialDebug.clarity || initialDebug.clarity.value !== 100 || !initialHud.clarityText.includes("Clarity: 100%")) {
+    throw new Error(`Smoke test did not observe initial Clarity baseline: ${JSON.stringify({ initialHud, initialDebug })}`);
   }
 
   if (!afterRestart || afterRestart.roomCount < 5 || afterRestart.connectionCount < 4) {
@@ -266,11 +277,21 @@ try {
   }
 
   if (
+    !afterCollection.debug.clarity ||
+    afterCollection.debug.clarity.value >= initialDebug.clarity.value ||
+    !afterCollection.clarityText.includes("Clarity:") ||
+    !afterCollection.statusText.includes("Clarity variance")
+  ) {
+    throw new Error(`Smoke test did not observe Clarity change after report collection: ${JSON.stringify(afterCollection)}`);
+  }
+
+  if (
     !lockedExtraction.debug ||
     lockedExtraction.debug.extraction.available ||
     lockedExtraction.debug.extraction.completed ||
     !lockedExtraction.statusText.includes("adequate paperwork") ||
-    !lockedExtraction.extractionText.includes("Reports still required")
+    !lockedExtraction.extractionText.includes("Reports still required") ||
+    !lockedExtraction.debug.clarity.appliedEventIds.includes("locked-extraction-approach")
   ) {
     throw new Error(`Smoke test did not observe locked extraction feedback: ${JSON.stringify(lockedExtraction)}`);
   }
@@ -285,7 +306,8 @@ try {
     !afterAllReports.debug.extraction.available ||
     afterAllReports.debug.extraction.completed ||
     !afterAllReports.statusText.includes("Extraction approved") ||
-    !afterAllReports.extractionText.includes("Proceed to elevator")
+    !afterAllReports.extractionText.includes("Proceed to elevator") ||
+    afterAllReports.debug.clarity.value >= initialDebug.clarity.value
   ) {
     throw new Error(`Smoke test did not observe extraction availability after all reports: ${JSON.stringify(afterAllReports)}`);
   }
@@ -315,7 +337,8 @@ try {
     afterRestart.uncollectedReportIds.length !== afterRestart.reportTotal ||
     !afterRestart.reportPositions.every((report) => report.visible) ||
     afterRestart.extraction.available ||
-    afterRestart.extraction.completed
+    afterRestart.extraction.completed ||
+    afterRestart.clarity.value !== afterRestart.clarity.baseline
   ) {
     throw new Error(`Smoke test did not observe report reset after restart: ${JSON.stringify(afterRestart)}`);
   }
@@ -330,9 +353,9 @@ try {
 
   const proof = {
     url: smokeUrl,
-    screenshot: ".logs/m4-1-smoke.png",
-    reportScreenshot: ".logs/m4-1-reports-before.png",
-    recordsSignageScreenshot: ".logs/m4-1-records-signage.png",
+    screenshot: ".logs/m5-smoke.png",
+    reportScreenshot: ".logs/m5-reports-before.png",
+    recordsSignageScreenshot: ".logs/m5-records-signage.png",
     recordsSignage: recordsLabel,
     initialDebug,
     initialHud,
@@ -352,8 +375,8 @@ try {
     server: `vite createServer API on 127.0.0.1:${smokePort}`
   };
 
-  writeFileSync(resolve(logsDir, "m4-1-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
-  console.log("M4.1 smoke passed. Screenshot: .logs/m4-1-smoke.png");
+  writeFileSync(resolve(logsDir, "m5-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
+  console.log("M5 smoke passed. Screenshot: .logs/m5-smoke.png");
 } finally {
   await server.close();
 }

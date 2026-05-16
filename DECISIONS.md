@@ -213,3 +213,23 @@ Rationale:
 Consequences:
 - M4.1 smoke proof must verify the locked state, unlocked prompt, `E` interaction, win state, and restart reset.
 - Future interaction work may replace this with a shared interaction module if a later milestone needs it.
+
+## D012 - Add Non-Punitive Source-Driven Clarity For M5
+
+Status: Accepted
+
+Context:
+M5 needs a psychological/surreal meter without introducing fail states, horror pressure, or punitive survival mechanics.
+
+Decision:
+Add Clarity as source-driven game state starting at 100. Existing events can lower it slightly: filing Incident Reports, entering selected strange rooms, and approaching locked extraction. Restart restores Clarity to company baseline.
+
+Rationale:
+- Makes the building feel bureaucratically unstable without darkening the game.
+- Keeps the system inspectable and easy to expand for M6+.
+- Uses existing player actions instead of adding new mechanics before they are approved.
+
+Consequences:
+- M5 does not add a Clarity fail condition.
+- HUD and status messages communicate Clarity changes in a calm, dry voice.
+- Future low-Clarity sign contradictions or HUD unreliability can build on the Clarity state.

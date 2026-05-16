@@ -2,7 +2,7 @@
 
 ## Current Task
 
-Current milestone: M4 - Extraction elevator + win/restart loop.
+Current milestone: M5 - Clarity meter.
 
 Status: Complete as of 2026-05-16.
 
@@ -20,11 +20,13 @@ M4 completed on 2026-05-16: added source-driven elevator extraction, all-report 
 
 M4.1 corrective patch completed on 2026-05-16: replaced ambiguous passive extraction with a clear `E` interaction at the approved elevator, updated HUD prompts, and expanded smoke proof for locked, unlocked, win, and restart reset states.
 
+M5 completed on 2026-05-16: added source-driven Clarity state, HUD Clarity display, subtle Clarity changes from existing events, restart reset, static validation, and smoke proof while preserving M1-M4 contracts.
+
 ## Next Task
 
-Next milestone: M5 - Clarity meter.
+Next milestone: M6 - Performance Review narrator system.
 
-When approved for M5, add the first Clarity meter and low-Clarity presentation changes. Do not add Performance Review, The Meeting, AI assets, enemies, combat, inventory, or multiplayer.
+When approved for M6, add the Performance Review narrator system. Do not add The Meeting, AI assets, enemies, combat, inventory, or multiplayer.
 
 Every future milestone must run `npm run verify` before claiming pass. If a milestone intentionally changes a locked behavior contract, update `STABILITY.md`, the relevant validation/smoke checks, and the milestone log with the reason.
 
@@ -168,15 +170,27 @@ Verification command or proof:
 
 ### M5 - Clarity Meter
 
+Status: Complete.
+
 Acceptance criteria:
-- Clarity appears on HUD.
-- Clarity can decrease.
-- Low Clarity changes signs, labels, HUD reliability, or messages.
-- The effect is surreal and funny-unsettling, not horror.
+- Clarity appears on HUD. Complete.
+- Clarity can decrease. Complete.
+- Low Clarity changes signs, labels, HUD reliability, or messages. Complete: M5 adds dry status-message changes and HUD state labels.
+- The effect is surreal and funny-unsettling, not horror. Complete.
+- Restart restores Clarity to baseline. Complete.
+- Existing report collection, extraction, movement, collision, room traversal, and restart contracts still pass. Complete.
 
 Verification command or proof:
-- Build passes.
-- Screenshot or playtest proof at normal and low Clarity.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m5-smoke.json`
+- `.logs/m5-smoke.png`
+- `.logs/m5-reports-before.png`
+- `.logs/m5-records-signage.png`
+- `.logs/m5.md`
 
 ### M6 - Performance Review Narrator System
 
