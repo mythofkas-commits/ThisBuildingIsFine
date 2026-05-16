@@ -2,7 +2,7 @@
 
 ## Current Task
 
-Current milestone: M3 - Incident Report collectible + HUD.
+Current milestone: M4 - Extraction elevator + win/restart loop.
 
 Status: Complete as of 2026-05-16.
 
@@ -16,11 +16,15 @@ M3.1 corrective patch completed on 2026-05-16: reduced and raised procedural wal
 
 M3.2 stability guardrail patch completed on 2026-05-16: added `STABILITY.md`, static project validation, `npm run validate`, `npm run verify`, and non-brittle smoke contracts for the working M1-M3 foundation.
 
+M4 completed on 2026-05-16: added source-driven elevator extraction, all-report gating, locked/available/complete HUD feedback, minimal win state, restart reset, smoke proof, and updated stability coverage.
+
+M4.1 corrective patch completed on 2026-05-16: replaced ambiguous passive extraction with a clear `E` interaction at the approved elevator, updated HUD prompts, and expanded smoke proof for locked, unlocked, win, and restart reset states.
+
 ## Next Task
 
-Next milestone: M4 - Extraction elevator + win/restart loop.
+Next milestone: M5 - Clarity meter.
 
-When approved for M4, attach source-driven extraction behavior to the existing elevator placeholder and add a minimal win/restart loop. Do not add Clarity, Performance Review, The Meeting, AI assets, enemies, combat, inventory, or multiplayer.
+When approved for M5, add the first Clarity meter and low-Clarity presentation changes. Do not add Performance Review, The Meeting, AI assets, enemies, combat, inventory, or multiplayer.
 
 Every future milestone must run `npm run verify` before claiming pass. If a milestone intentionally changes a locked behavior contract, update `STABILITY.md`, the relevant validation/smoke checks, and the milestone log with the reason.
 
@@ -133,14 +137,34 @@ Verification command or proof:
 
 ### M4 - Extraction Elevator + Win/Restart Loop
 
+Status: Complete.
+
 Acceptance criteria:
-- Elevator appears as extraction point.
-- Player can win after enough reports.
-- Restart flow works after win or fail.
+- Elevator appears as extraction point. Complete.
+- Extraction zone is source-defined in the elevator room. Complete.
+- Extraction is locked before all reports are collected. Complete.
+- HUD/status explains that reports are still required. Complete.
+- Extraction becomes available after all 3 Incident Reports. Complete.
+- Approaching active extraction triggers minimal win state. Complete.
+- M4.1: Active extraction displays `Press E` and pressing `E` near the approved elevator triggers the minimal win state. Complete.
+- Restart resets reports, extraction, win state, HUD, and player position. Complete.
+- Movement, collision, room traversal, and M1-M3 stability contracts still pass. Complete.
 
 Verification command or proof:
-- Build passes.
-- Browser playtest reaches win screen and restarts.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m4-smoke.json`
+- `.logs/m4-smoke.png`
+- `.logs/m4-reports-before.png`
+- `.logs/m4.md`
+- `.logs/m4-1-smoke.json`
+- `.logs/m4-1-smoke.png`
+- `.logs/m4-1-reports-before.png`
+- `.logs/m4-1-records-signage.png`
+- `.logs/m4-1.md`
 
 ### M5 - Clarity Meter
 

@@ -174,3 +174,42 @@ Rationale:
 Consequences:
 - M3 uses proximity collection only; no inventory or detailed document reader exists yet.
 - Extraction gating and win behavior remain deferred to M4.
+
+## D010 - Add Source-Driven Elevator Extraction For M4
+
+Status: Accepted
+
+Context:
+M4 needs a minimal extraction/win loop without adding inventory, complex elevator animation, cutscenes, or later milestone systems.
+
+Decision:
+Define a source-driven extraction zone in the elevator room and gate completion on all required Incident Reports being collected. Use restrained HUD/status text and a small procedural marker/sign to communicate locked, available, and complete states.
+
+Rationale:
+- Keeps extraction inspectable in TypeScript data and factory modules.
+- Preserves M1-M3 stability contracts while completing the first run loop.
+- Avoids hidden editor state and manual placement.
+
+Consequences:
+- Extraction is proximity-based for now.
+- The win state is intentionally minimal and HUD-driven.
+- More elaborate elevator behavior or end-of-run scoring is deferred until explicitly approved.
+
+## D011 - Use Explicit Elevator Interaction For M4.1 Extraction
+
+Status: Accepted
+
+Context:
+Manual M4 playtest showed that standing in the extraction zone after collecting all reports did not clearly or reliably trigger the win state. The HUD text implied passive behavior without telling the player exactly how to complete extraction.
+
+Decision:
+Use `E` as the explicit interaction key for approved extraction. The elevator remains locked before all Incident Reports are collected, becomes available after all required reports, and completes the audit only when the player is near the elevator and presses `E`.
+
+Rationale:
+- Makes the completion action unambiguous for manual play.
+- Keeps extraction source-driven and easy to smoke test.
+- Avoids adding a larger interaction or inventory system before it is needed.
+
+Consequences:
+- M4.1 smoke proof must verify the locked state, unlocked prompt, `E` interaction, win state, and restart reset.
+- Future interaction work may replace this with a shared interaction module if a later milestone needs it.

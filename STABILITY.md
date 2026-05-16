@@ -58,6 +58,16 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - Collecting a report updates HUD text/status.
 - Restart updates HUD state back to the reset report count.
 
+### Extraction And Win Loop
+
+- Extraction must remain source-driven and associated with the elevator room.
+- Extraction is unavailable until all required Incident Reports are collected.
+- Approaching locked extraction gives dry corporate feedback instead of ending the run.
+- After all required reports are collected, extraction becomes available.
+- The HUD must clearly tell the player how to complete available extraction.
+- Using active extraction through its displayed interaction triggers a minimal, restrained win/completion state.
+- Restart clears the win state and returns extraction to locked.
+
 ### Tone Constraints
 
 - The game remains uncanny, strange, dryly funny, corporate-surreal, and quietly tense.
