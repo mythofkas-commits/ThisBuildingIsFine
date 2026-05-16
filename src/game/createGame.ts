@@ -18,6 +18,7 @@ import {
 } from "./gameState";
 import { createHud } from "./hud";
 import { createMovementCollision } from "./navigation/collision";
+import { emitNarrator, tickNarrator } from "./narrator/updateNarrator";
 import { createOfficeScene } from "./officeScene";
 import { createPlayer } from "./player";
 import { m2RoomNetwork } from "./rooms/roomData";
@@ -56,6 +57,13 @@ interface DebugState {
     lastEventId: string | null;
     lastMessage: string;
     appliedEventIds: string[];
+  };
+  narrator: {
+    currentMessage: string;
+    currentEventId: string;
+    emissionCount: number;
+    blockedCount: number;
+    history: Array<{ eventId: string; message: string; frame: number }>;
   };
   nearestReportId: string | null;
   restartCount: number;
@@ -106,6 +114,7 @@ export function createGame(root: HTMLElement): void {
     incidentReports.reset();
     extractionZone.setAvailability("locked");
     extractionUseRequested = false;
+    emitNarrator(state.narrator, "restart", { force: true });
   };
 
   const hud = createHud(shell, restart);
@@ -117,6 +126,7 @@ export function createGame(root: HTMLElement): void {
   });
 
   scene.onBeforeRenderObservable.add(() => {
+    tickNarrator(state.narrator);
     player.update();
     const collectedReport = incidentReports.collectNearby(player.camera.position);
 
@@ -129,9 +139,11 @@ export function createGame(root: HTMLElement): void {
       );
 
       if (reportAccepted) {
+        emitNarrator(state.narrator, "report-collected", { force: true });
         const clarityChange = applyClarityEvent(state.clarity, "incident-report-filed");
         if (clarityChange.changed) {
           state.status = `${state.status} ${clarityChange.message}`;
+          emitNarrator(state.narrator, "clarity-changed", { force: true });
         }
       }
     }
@@ -140,6 +152,11 @@ export function createGame(root: HTMLElement): void {
     const roomClarityChange = applyRoomClarityEvent(state.clarity, currentRoomId);
     if (roomClarityChange?.changed && !collectedReport) {
       state.status = roomClarityChange.message;
+      if (currentRoomId === "records") {
+        emitNarrator(state.narrator, "records-room-entered");
+      } else if (currentRoomId === "elevator") {
+        emitNarrator(state.narrator, "elevator-room-entered");
+      }
     }
 
     const extractionWasAvailable = state.extractionAvailable;
@@ -147,6 +164,7 @@ export function createGame(root: HTMLElement): void {
 
     if (!extractionWasAvailable && extractionAvailable && !state.extractionCompleted) {
       state.status = extractionMessages.available;
+      emitNarrator(state.narrator, "extraction-approved", { force: true });
     }
 
     const nearExtraction = extractionZone.contains(player.camera.position);
@@ -154,14 +172,18 @@ export function createGame(root: HTMLElement): void {
     if (nearExtraction && state.extractionCompleted) {
       state.status = extractionMessages.complete;
     } else if (nearExtraction && extractionAvailable && extractionUseRequested) {
-      completeExtraction(state, extractionMessages.complete);
+      if (completeExtraction(state, extractionMessages.complete)) {
+        emitNarrator(state.narrator, "extraction-complete", { force: true });
+      }
     } else if (nearExtraction && extractionAvailable) {
       state.status = extractionMessages.availableNear;
     } else if (nearExtraction && !extractionAvailable) {
       noteLockedExtraction(state, extractionMessages.locked);
+      emitNarrator(state.narrator, "locked-extraction");
       const clarityChange = applyClarityEvent(state.clarity, "locked-extraction-approach");
       if (clarityChange.changed) {
         state.status = `${extractionMessages.locked} ${clarityChange.message}`;
+        emitNarrator(state.narrator, "clarity-changed", { force: true });
       }
     }
 
@@ -262,6 +284,13 @@ function updateDebugState(
       lastEventId: state.clarity.lastEventId,
       lastMessage: state.clarity.lastMessage,
       appliedEventIds: Array.from(state.clarity.appliedEventIds)
+    },
+    narrator: {
+      currentMessage: state.narrator.currentMessage,
+      currentEventId: state.narrator.currentEventId,
+      emissionCount: state.narrator.emissionCount,
+      blockedCount: state.narrator.blockedCount,
+      history: state.narrator.history.map((entry) => ({ ...entry }))
     },
     nearestReportId: nearestReport?.definition.id ?? null,
     restartCount: state.restartCount,

@@ -22,6 +22,7 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
       <section class="hud-panel">
         <div class="hud-title">The Building Is Fine</div>
         <div class="hud-status" data-hud-status></div>
+        <div class="hud-narrator" data-hud-narrator></div>
       </section>
       <section class="hud-panel hud-metrics">
         <div class="hud-metric" data-hud-report></div>
@@ -42,13 +43,14 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
   root.appendChild(hud);
 
   const status = hud.querySelector<HTMLElement>("[data-hud-status]");
+  const narrator = hud.querySelector<HTMLElement>("[data-hud-narrator]");
   const report = hud.querySelector<HTMLElement>("[data-hud-report]");
   const clarity = hud.querySelector<HTMLElement>("[data-hud-clarity]");
   const extraction = hud.querySelector<HTMLElement>("[data-hud-extraction]");
   const location = hud.querySelector<HTMLElement>("[data-hud-location]");
   const restartButton = hud.querySelector<HTMLButtonElement>(".restart-button");
 
-  if (!status || !report || !clarity || !extraction || !location || !restartButton) {
+  if (!status || !narrator || !report || !clarity || !extraction || !location || !restartButton) {
     throw new Error("HUD failed to initialize.");
   }
 
@@ -63,6 +65,7 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
   return {
     update: (state, cameraPosition, reports, clarityInfo, extractionInfo) => {
       status.textContent = state.status;
+      narrator.textContent = state.narrator.currentMessage;
       const nearest = reports.nearestDistance === null || reports.nearestLabel === null
         ? "No pending paperwork in range of this thought."
         : `${reports.nearestLabel}: ${reports.nearestDistance < 2.4 ? "nearby" : "pending"}`;
