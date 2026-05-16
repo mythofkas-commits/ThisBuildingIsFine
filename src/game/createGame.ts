@@ -1,6 +1,8 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
+import { getClarityHudInfo } from "./clarity/clarityState";
+import { applyClarityEvent, applyRoomClarityEvent } from "./clarity/updateClarity";
 import type { IncidentReportCollection } from "./collectibles/createIncidentReports";
 import { createIncidentReports } from "./collectibles/createIncidentReports";
 import { createExtractionZone } from "./extraction/createExtractionZone";
@@ -18,6 +20,7 @@ import { createHud } from "./hud";
 import { createMovementCollision } from "./navigation/collision";
 import { createOfficeScene } from "./officeScene";
 import { createPlayer } from "./player";
+import { m2RoomNetwork } from "./rooms/roomData";
 
 interface DebugState {
   ready: boolean;
@@ -46,6 +49,14 @@ interface DebugState {
     near: boolean;
   };
   decorativeSigns: Array<{ name: string; x: number; y: number; z: number; width?: number; height?: number }>;
+  clarity: {
+    value: number;
+    baseline: number;
+    band: string;
+    lastEventId: string | null;
+    lastMessage: string;
+    appliedEventIds: string[];
+  };
   nearestReportId: string | null;
   restartCount: number;
   cameraPosition: { x: number; y: number; z: number };
@@ -110,12 +121,25 @@ export function createGame(root: HTMLElement): void {
     const collectedReport = incidentReports.collectNearby(player.camera.position);
 
     if (collectedReport) {
-      collectReport(
+      const reportAccepted = collectReport(
         state,
         collectedReport.definition.id,
         collectedReport.definition.label,
         collectedReport.definition.text
       );
+
+      if (reportAccepted) {
+        const clarityChange = applyClarityEvent(state.clarity, "incident-report-filed");
+        if (clarityChange.changed) {
+          state.status = `${state.status} ${clarityChange.message}`;
+        }
+      }
+    }
+
+    const currentRoomId = getCurrentRoomId(player.camera.position);
+    const roomClarityChange = applyRoomClarityEvent(state.clarity, currentRoomId);
+    if (roomClarityChange?.changed && !collectedReport) {
+      state.status = roomClarityChange.message;
     }
 
     const extractionWasAvailable = state.extractionAvailable;
@@ -135,6 +159,10 @@ export function createGame(root: HTMLElement): void {
       state.status = extractionMessages.availableNear;
     } else if (nearExtraction && !extractionAvailable) {
       noteLockedExtraction(state, extractionMessages.locked);
+      const clarityChange = applyClarityEvent(state.clarity, "locked-extraction-approach");
+      if (clarityChange.changed) {
+        state.status = `${extractionMessages.locked} ${clarityChange.message}`;
+      }
     }
 
     extractionUseRequested = false;
@@ -143,6 +171,7 @@ export function createGame(root: HTMLElement): void {
       state,
       player.camera.position,
       incidentReports.getHudInfo(player.camera.position),
+      getClarityHudInfo(state.clarity),
       getExtractionHudInfo(extractionZone, player.camera.position, state)
     );
     updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone);
@@ -226,6 +255,14 @@ function updateDebugState(
           height: mesh.metadata?.height
         };
       }),
+    clarity: {
+      value: state.clarity.value,
+      baseline: state.clarity.baseline,
+      band: getClarityHudInfo(state.clarity).band,
+      lastEventId: state.clarity.lastEventId,
+      lastMessage: state.clarity.lastMessage,
+      appliedEventIds: Array.from(state.clarity.appliedEventIds)
+    },
     nearestReportId: nearestReport?.definition.id ?? null,
     restartCount: state.restartCount,
     cameraPosition: {
@@ -235,6 +272,21 @@ function updateDebugState(
     },
     lastStatus: state.status
   };
+}
+
+function getCurrentRoomId(position: Vector3): string | null {
+  const room = m2RoomNetwork.rooms.find((candidate) => {
+    const halfWidth = candidate.size.width / 2;
+    const halfDepth = candidate.size.depth / 2;
+    return (
+      position.x >= candidate.center.x - halfWidth &&
+      position.x <= candidate.center.x + halfWidth &&
+      position.z >= candidate.center.z - halfDepth &&
+      position.z <= candidate.center.z + halfDepth
+    );
+  });
+
+  return room?.id ?? null;
 }
 
 function getExtractionHudInfo(extractionZone: ExtractionZone, cameraPosition: Vector3, state: ReturnType<typeof createInitialGameState>) {

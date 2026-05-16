@@ -74,6 +74,8 @@ function walk(dir, ignored = new Set([".git", ".osgrep", "node_modules", "dist"]
   "src/game/rooms/createRoomNetwork.ts",
   "src/game/collectibles/incidentReports.ts",
   "src/game/collectibles/createIncidentReports.ts",
+  "src/game/clarity/clarityState.ts",
+  "src/game/clarity/updateClarity.ts",
   "src/game/extraction/extractionState.ts",
   "src/game/extraction/createExtractionZone.ts",
   "scripts/smoke.mjs"
@@ -116,6 +118,15 @@ if (!extractionData.includes('roomId: "elevator"')) {
   fail("Extraction zone must remain associated with the elevator room for M4.");
 }
 
+const clarityData = readText("src/game/clarity/clarityState.ts");
+if (!clarityData.includes("clarityBaseline = 100")) {
+  fail("M5 Clarity must start at company baseline 100.");
+}
+
+if (!clarityData.includes('"incident-report-filed"')) {
+  fail("M5 Clarity must include a source-driven Incident Report event.");
+}
+
 const allPaths = walk(".");
 const forbiddenEngineMarkers = allPaths.filter((path) => {
   const lower = path.toLowerCase();
@@ -138,7 +149,6 @@ if (forbiddenEngineMarkers.length > 0) {
 }
 
 const prematureFeaturePatterns = [
-  /(^|\/)(clarity|claritymeter)(\/|\.|$)/i,
   /(^|\/)(performance-review|performanceReview|narrator|buildingVoice)(\/|\.|$)/i,
   /(^|\/)(meeting|theMeeting)(\/|\.|$)/i,
   /(^|\/)(inventory|combat|enemy|enemies|multiplayer)(\/|\.|$)/i
@@ -162,6 +172,7 @@ const stability = readText("STABILITY.md");
   "Incident Report System",
   "HUD Behavior",
   "Extraction And Win Loop",
+  "Clarity System",
   "Tone Constraints",
   "AI-Only Workflow"
 ].forEach((heading) => {

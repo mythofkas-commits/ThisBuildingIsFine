@@ -1,7 +1,11 @@
+import { createInitialClarityState, resetClarity } from "./clarity/clarityState";
+import type { ClarityState } from "./clarity/clarityTypes";
+
 export interface GameState {
   collectedReportIds: Set<string>;
   reportTotal: number;
   lastCollectedReportId: string | null;
+  clarity: ClarityState;
   extractionAvailable: boolean;
   extractionCompleted: boolean;
   extractionLockedNoticeActive: boolean;
@@ -14,6 +18,7 @@ export function createInitialGameState(reportTotal = 0): GameState {
     collectedReportIds: new Set<string>(),
     reportTotal,
     lastCollectedReportId: null,
+    clarity: createInitialClarityState(),
     extractionAvailable: false,
     extractionCompleted: false,
     extractionLockedNoticeActive: false,
@@ -61,9 +66,10 @@ export function completeExtraction(state: GameState, message: string): boolean {
 export function resetGameState(state: GameState): void {
   state.collectedReportIds.clear();
   state.lastCollectedReportId = null;
+  resetClarity(state.clarity);
   state.extractionAvailable = false;
   state.extractionCompleted = false;
   state.extractionLockedNoticeActive = false;
   state.restartCount += 1;
-  state.status = "Your previous route has been filed under training materials. Evidence has been reissued.";
+  state.status = "Clarity restored to company baseline. Evidence has been reissued.";
 }

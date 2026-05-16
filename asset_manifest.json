@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "The Building Is Fine",
-  "status": "m4_extraction_win_loop",
+  "status": "m5_clarity_meter",
   "rules": {
     "default_asset_strategy": "procedural geometry and generated materials first",
     "generated_assets_begin_milestone": "M9",
@@ -150,6 +150,24 @@
       "replacement_notes": "Future milestones may replace the marker/sign art or add light animation while preserving source-driven extraction rules."
     },
     {
+      "id": "m5-clarity-meter",
+      "name": "M5 Clarity Meter",
+      "category": "interface",
+      "status": "validated",
+      "source_type": "html_css_source_data",
+      "prompt_ref": ".prompts/narrator_voice.md",
+      "source_path": "src/game/clarity/clarityState.ts",
+      "game_path": "dom:[data-hud-clarity]",
+      "format": "runtime DOM HUD text backed by TypeScript Clarity state",
+      "scale_notes": "Starts at 100 percent and changes through small source-defined event deltas.",
+      "style_notes": "Dry corporate status copy; subtle and non-horror.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m5-smoke.json", ".logs/m5-smoke.png"]
+      },
+      "replacement_notes": "Future milestones may add sign contradictions or visual response while preserving Clarity baseline and restart reset behavior."
+    },
+    {
       "id": "m1-dom-hud",
       "name": "M1 DOM HUD Placeholder",
       "category": "interface",
@@ -191,7 +209,11 @@
       ".logs/m4-1-smoke.json",
       ".logs/m4-1-smoke.png",
       ".logs/m4-1-reports-before.png",
-      ".logs/m4-1-records-signage.png"
+      ".logs/m4-1-records-signage.png",
+      ".logs/m5-smoke.json",
+      ".logs/m5-smoke.png",
+      ".logs/m5-reports-before.png",
+      ".logs/m5-records-signage.png"
     ]
   }
 }
