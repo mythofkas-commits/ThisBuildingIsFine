@@ -72,7 +72,7 @@ try {
   await page.goto(smokeUrl, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.__TBIF_DEBUG__?.ready === true);
   await page.waitForTimeout(500);
-  await page.screenshot({ path: resolve(logsDir, "m3-2-reports-before.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m4-1-reports-before.png"), fullPage: true });
 
   const initialDebug = await page.evaluate(() => window.__TBIF_DEBUG__);
   const initialHud = await page.evaluate(() => ({
@@ -99,14 +99,70 @@ try {
 
   await page.evaluate(() => {
     window.__TBIF_PROOF_CAMERA__?.(
+      { x: 16, y: 1.65, z: 9.72 },
+      { x: 16, y: 1.55, z: 11.5 }
+    );
+  });
+  await page.waitForTimeout(250);
+  const lockedExtraction = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
+  }));
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 9.45, y: 1.65, z: 0.8 },
+      { x: 9.45, y: 1.55, z: 1.7 }
+    );
+  });
+  await page.waitForTimeout(250);
+  const afterSecondReport = await page.evaluate(() => window.__TBIF_DEBUG__);
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 13.9, y: 1.65, z: 6.3 },
+      { x: 14.4, y: 1.55, z: 7.1 }
+    );
+  });
+  await page.waitForTimeout(250);
+  const afterAllReports = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
+  }));
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 16, y: 1.65, z: 9.72 },
+      { x: 16, y: 1.55, z: 11.5 }
+    );
+  });
+  await page.waitForTimeout(250);
+  const afterExtractionPrompt = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
+  }));
+
+  await page.keyboard.press("e");
+  await page.waitForTimeout(250);
+  const afterInteractionWin = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
+  }));
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
       { x: 6.4, y: 1.65, z: 8.1 },
       { x: 4.05, y: 2.24, z: 8.1 }
     );
   });
   await page.waitForTimeout(250);
-  await page.screenshot({ path: resolve(logsDir, "m3-2-records-signage.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m4-1-records-signage.png"), fullPage: true });
 
-  const screenshotPath = resolve(logsDir, "m3-2-smoke.png");
+  const screenshotPath = resolve(logsDir, "m4-1-smoke.png");
   await page.screenshot({ path: screenshotPath, fullPage: true });
 
   await page.keyboard.press("r");
@@ -142,6 +198,10 @@ try {
 
   if (!initialDebug || initialDebug.reportTotal < 3 || initialDebug.reportPositions.length < 3) {
     throw new Error(`Smoke test expected at least 3 source-defined reports: ${JSON.stringify(initialDebug)}`);
+  }
+
+  if (!initialDebug.extraction || initialDebug.extraction.id !== "elevator-extraction") {
+    throw new Error(`Smoke test did not observe source-defined extraction zone: ${JSON.stringify(initialDebug)}`);
   }
 
   const requiredRoomIds = ["lobby", "cubicles", "conference", "records", "elevator"];
@@ -206,9 +266,56 @@ try {
   }
 
   if (
+    !lockedExtraction.debug ||
+    lockedExtraction.debug.extraction.available ||
+    lockedExtraction.debug.extraction.completed ||
+    !lockedExtraction.statusText.includes("adequate paperwork") ||
+    !lockedExtraction.extractionText.includes("Reports still required")
+  ) {
+    throw new Error(`Smoke test did not observe locked extraction feedback: ${JSON.stringify(lockedExtraction)}`);
+  }
+
+  if (!afterSecondReport || afterSecondReport.collectedReportCount < 2 || afterSecondReport.extraction.available) {
+    throw new Error(`Smoke test did not collect the second report while keeping extraction locked: ${JSON.stringify(afterSecondReport)}`);
+  }
+
+  if (
+    !afterAllReports.debug ||
+    afterAllReports.debug.collectedReportCount < 3 ||
+    !afterAllReports.debug.extraction.available ||
+    afterAllReports.debug.extraction.completed ||
+    !afterAllReports.statusText.includes("Extraction approved") ||
+    !afterAllReports.extractionText.includes("Proceed to elevator")
+  ) {
+    throw new Error(`Smoke test did not observe extraction availability after all reports: ${JSON.stringify(afterAllReports)}`);
+  }
+
+  if (
+    !afterExtractionPrompt.debug ||
+    !afterExtractionPrompt.debug.extraction.available ||
+    afterExtractionPrompt.debug.extraction.completed ||
+    !afterExtractionPrompt.debug.extraction.near ||
+    !afterExtractionPrompt.statusText.includes("Press E") ||
+    !afterExtractionPrompt.extractionText.includes("Press E")
+  ) {
+    throw new Error(`Smoke test did not observe explicit extraction prompt: ${JSON.stringify(afterExtractionPrompt)}`);
+  }
+
+  if (
+    !afterInteractionWin.debug ||
+    !afterInteractionWin.debug.extraction.completed ||
+    !afterInteractionWin.statusText.includes("Audit filed") ||
+    !afterInteractionWin.extractionText.includes("audit filed")
+  ) {
+    throw new Error(`Smoke test did not observe minimal win state after E interaction: ${JSON.stringify(afterInteractionWin)}`);
+  }
+
+  if (
     afterRestart.collectedReportCount !== 0 ||
     afterRestart.uncollectedReportIds.length !== afterRestart.reportTotal ||
-    !afterRestart.reportPositions.every((report) => report.visible)
+    !afterRestart.reportPositions.every((report) => report.visible) ||
+    afterRestart.extraction.available ||
+    afterRestart.extraction.completed
   ) {
     throw new Error(`Smoke test did not observe report reset after restart: ${JSON.stringify(afterRestart)}`);
   }
@@ -223,13 +330,18 @@ try {
 
   const proof = {
     url: smokeUrl,
-    screenshot: ".logs/m3-2-smoke.png",
-    reportScreenshot: ".logs/m3-2-reports-before.png",
-    recordsSignageScreenshot: ".logs/m3-2-records-signage.png",
+    screenshot: ".logs/m4-1-smoke.png",
+    reportScreenshot: ".logs/m4-1-reports-before.png",
+    recordsSignageScreenshot: ".logs/m4-1-records-signage.png",
     recordsSignage: recordsLabel,
     initialDebug,
     initialHud,
     afterCollection,
+    lockedExtraction,
+    afterSecondReport,
+    afterAllReports,
+    afterExtractionPrompt,
+    afterInteractionWin,
     debug: afterRestart,
     movementObserved: moved,
     traversalObserved: traversed,
@@ -240,8 +352,8 @@ try {
     server: `vite createServer API on 127.0.0.1:${smokePort}`
   };
 
-  writeFileSync(resolve(logsDir, "m3-2-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
-  console.log("M3.2 smoke passed. Screenshot: .logs/m3-2-smoke.png");
+  writeFileSync(resolve(logsDir, "m4-1-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
+  console.log("M4.1 smoke passed. Screenshot: .logs/m4-1-smoke.png");
 } finally {
   await server.close();
 }

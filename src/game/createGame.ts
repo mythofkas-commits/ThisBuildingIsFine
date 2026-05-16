@@ -3,7 +3,17 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
 import type { IncidentReportCollection } from "./collectibles/createIncidentReports";
 import { createIncidentReports } from "./collectibles/createIncidentReports";
-import { collectReport, createInitialGameState, resetGameState } from "./gameState";
+import { createExtractionZone } from "./extraction/createExtractionZone";
+import { extractionMessages } from "./extraction/extractionState";
+import type { ExtractionZone } from "./extraction/extractionTypes";
+import {
+  collectReport,
+  completeExtraction,
+  createInitialGameState,
+  noteLockedExtraction,
+  refreshExtractionAvailability,
+  resetGameState
+} from "./gameState";
 import { createHud } from "./hud";
 import { createMovementCollision } from "./navigation/collision";
 import { createOfficeScene } from "./officeScene";
@@ -25,6 +35,16 @@ interface DebugState {
   collectedReportIds: string[];
   uncollectedReportIds: string[];
   reportPositions: Array<{ id: string; roomId: string; x: number; y: number; z: number; visible: boolean }>;
+  extraction: {
+    id: string;
+    roomId: string;
+    label: string;
+    available: boolean;
+    completed: boolean;
+    requiredReportCount: number;
+    distance: number;
+    near: boolean;
+  };
   decorativeSigns: Array<{ name: string; x: number; y: number; z: number; width?: number; height?: number }>;
   nearestReportId: string | null;
   restartCount: number;
@@ -59,9 +79,11 @@ export function createGame(root: HTMLElement): void {
   const scene = new Scene(engine);
   const office = createOfficeScene(scene);
   const incidentReports = createIncidentReports(scene, office.root);
+  const extractionZone = createExtractionZone(scene, office.root);
   const state = createInitialGameState(incidentReports.total);
   const collision = createMovementCollision(scene);
   const player = createPlayer(scene, canvas, collision);
+  let extractionUseRequested = false;
   window.__TBIF_PROOF_CAMERA__ = (position, target) => {
     player.camera.position.copyFrom(new Vector3(position.x, position.y, position.z));
     player.camera.setTarget(new Vector3(target.x, target.y, target.z));
@@ -71,9 +93,17 @@ export function createGame(root: HTMLElement): void {
     resetGameState(state);
     player.reset();
     incidentReports.reset();
+    extractionZone.setAvailability("locked");
+    extractionUseRequested = false;
   };
 
   const hud = createHud(shell, restart);
+
+  window.addEventListener("keydown", (event) => {
+    if (event.code === "KeyE") {
+      extractionUseRequested = true;
+    }
+  });
 
   scene.onBeforeRenderObservable.add(() => {
     player.update();
@@ -88,8 +118,34 @@ export function createGame(root: HTMLElement): void {
       );
     }
 
-    hud.update(state, player.camera.position, incidentReports.getHudInfo(player.camera.position));
-    updateDebugState(scene, state, player.camera.position, office, collision, incidentReports);
+    const extractionWasAvailable = state.extractionAvailable;
+    const extractionAvailable = refreshExtractionAvailability(state);
+
+    if (!extractionWasAvailable && extractionAvailable && !state.extractionCompleted) {
+      state.status = extractionMessages.available;
+    }
+
+    const nearExtraction = extractionZone.contains(player.camera.position);
+
+    if (nearExtraction && state.extractionCompleted) {
+      state.status = extractionMessages.complete;
+    } else if (nearExtraction && extractionAvailable && extractionUseRequested) {
+      completeExtraction(state, extractionMessages.complete);
+    } else if (nearExtraction && extractionAvailable) {
+      state.status = extractionMessages.availableNear;
+    } else if (nearExtraction && !extractionAvailable) {
+      noteLockedExtraction(state, extractionMessages.locked);
+    }
+
+    extractionUseRequested = false;
+    extractionZone.setAvailability(state.extractionCompleted ? "complete" : state.extractionAvailable ? "available" : "locked");
+    hud.update(
+      state,
+      player.camera.position,
+      incidentReports.getHudInfo(player.camera.position),
+      getExtractionHudInfo(extractionZone, player.camera.position, state)
+    );
+    updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone);
   });
 
   engine.runRenderLoop(() => {
@@ -100,7 +156,7 @@ export function createGame(root: HTMLElement): void {
     engine.resize();
   });
 
-  updateDebugState(scene, state, player.camera.position, office, collision, incidentReports);
+  updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone);
 }
 
 function updateDebugState(
@@ -109,9 +165,11 @@ function updateDebugState(
   cameraPosition: Vector3,
   office: ReturnType<typeof createOfficeScene>,
   collision: ReturnType<typeof createMovementCollision>,
-  incidentReports: IncidentReportCollection
+  incidentReports: IncidentReportCollection,
+  extractionZone: ExtractionZone
 ): void {
   const nearestReport = incidentReports.getNearestUncollected(cameraPosition);
+  const extractionDistance = extractionZone.distanceTo(cameraPosition);
 
   window.__TBIF_DEBUG__ = {
     ready: true,
@@ -145,6 +203,16 @@ function updateDebugState(
         visible: report.mesh.isVisible
       };
     }),
+    extraction: {
+      id: extractionZone.definition.id,
+      roomId: extractionZone.definition.roomId,
+      label: extractionZone.definition.label,
+      available: state.extractionAvailable,
+      completed: state.extractionCompleted,
+      requiredReportCount: extractionZone.definition.requiredReportCount,
+      distance: extractionDistance,
+      near: extractionZone.contains(cameraPosition)
+    },
     decorativeSigns: scene.meshes
       .filter((mesh) => mesh.metadata?.collision === "intentionally-non-collidable")
       .map((mesh) => {
@@ -167,4 +235,37 @@ function updateDebugState(
     },
     lastStatus: state.status
   };
+}
+
+function getExtractionHudInfo(extractionZone: ExtractionZone, cameraPosition: Vector3, state: ReturnType<typeof createInitialGameState>) {
+  const distance = extractionZone.distanceTo(cameraPosition);
+  const near = extractionZone.contains(cameraPosition);
+  return {
+    label: extractionZone.definition.label,
+    availability: state.extractionCompleted ? "complete" as const : state.extractionAvailable ? "available" as const : "locked" as const,
+    distance,
+    near,
+    reportsRequired: extractionZone.definition.requiredReportCount,
+    actionText: getExtractionActionText(distance, near, state)
+  };
+}
+
+function getExtractionActionText(distance: number, near: boolean, state: ReturnType<typeof createInitialGameState>): string {
+  if (state.extractionCompleted) {
+    return "Audit filed. R restarts the audit.";
+  }
+
+  if (state.extractionAvailable && near) {
+    return "Press E to file audit.";
+  }
+
+  if (state.extractionAvailable) {
+    return `Proceed to elevator. Distance ${distance.toFixed(1)}`;
+  }
+
+  if (near) {
+    return "Reports still required.";
+  }
+
+  return `Locked. Distance ${distance.toFixed(1)}`;
 }

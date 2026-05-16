@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "The Building Is Fine",
-  "status": "m3_incident_report_collectibles",
+  "status": "m4_extraction_win_loop",
   "rules": {
     "default_asset_strategy": "procedural geometry and generated materials first",
     "generated_assets_begin_milestone": "M9",
@@ -127,9 +127,27 @@
       "style_notes": "Corporate metal doorway with EXIT REQUEST PENDING sign.",
       "validation": {
         "status": "validated",
-        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png"]
+        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png", ".logs/m4-smoke.json"]
       },
-      "replacement_notes": "M4 should attach extraction behavior and win/restart flow to the elevator."
+      "replacement_notes": "M4 attached extraction behavior through a separate source-driven zone. Geometry remains a placeholder until a later approved polish or asset milestone."
+    },
+    {
+      "id": "m4-elevator-extraction-zone",
+      "name": "M4 Elevator Extraction Zone",
+      "category": "gameplay",
+      "status": "validated",
+      "source_type": "procedural_geometry_source_data",
+      "prompt_ref": ".prompts/environment_assets.md",
+      "source_path": "src/game/extraction/extractionState.ts",
+      "game_path": "mesh:extraction-zone-marker, mesh:extraction-status-sign",
+      "format": "runtime Babylon.js procedural marker and DynamicTexture status sign",
+      "scale_notes": "Small non-collidable extraction zone marker placed in the elevator room, gated by 3 Incident Reports.",
+      "style_notes": "Restrained corporate elevator status signage with dry locked/approved/filed states.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m4-smoke.json", ".logs/m4-smoke.png", ".logs/m4-1-smoke.json", ".logs/m4-1-smoke.png"]
+      },
+      "replacement_notes": "Future milestones may replace the marker/sign art or add light animation while preserving source-driven extraction rules."
     },
     {
       "id": "m1-dom-hud",
@@ -166,7 +184,14 @@
       ".logs/m3-smoke.png",
       ".logs/m3-1-smoke.json",
       ".logs/m3-1-records-signage.png",
-      ".logs/m3-1-smoke.png"
+      ".logs/m3-1-smoke.png",
+      ".logs/m4-smoke.json",
+      ".logs/m4-smoke.png",
+      ".logs/m4-reports-before.png",
+      ".logs/m4-1-smoke.json",
+      ".logs/m4-1-smoke.png",
+      ".logs/m4-1-reports-before.png",
+      ".logs/m4-1-records-signage.png"
     ]
   }
 }

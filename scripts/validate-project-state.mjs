@@ -74,6 +74,8 @@ function walk(dir, ignored = new Set([".git", ".osgrep", "node_modules", "dist"]
   "src/game/rooms/createRoomNetwork.ts",
   "src/game/collectibles/incidentReports.ts",
   "src/game/collectibles/createIncidentReports.ts",
+  "src/game/extraction/extractionState.ts",
+  "src/game/extraction/createExtractionZone.ts",
   "scripts/smoke.mjs"
 ].forEach(requireFile);
 
@@ -105,6 +107,15 @@ if (reportIds.length < 3) {
   }
 });
 
+const extractionData = readText("src/game/extraction/extractionState.ts");
+if (!extractionData.includes('id: "elevator-extraction"')) {
+  fail("Missing required extraction zone ID: elevator-extraction");
+}
+
+if (!extractionData.includes('roomId: "elevator"')) {
+  fail("Extraction zone must remain associated with the elevator room for M4.");
+}
+
 const allPaths = walk(".");
 const forbiddenEngineMarkers = allPaths.filter((path) => {
   const lower = path.toLowerCase();
@@ -130,7 +141,6 @@ const prematureFeaturePatterns = [
   /(^|\/)(clarity|claritymeter)(\/|\.|$)/i,
   /(^|\/)(performance-review|performanceReview|narrator|buildingVoice)(\/|\.|$)/i,
   /(^|\/)(meeting|theMeeting)(\/|\.|$)/i,
-  /(^|\/)(extraction|winCondition|win-state|winState)(\/|\.|$)/i,
   /(^|\/)(inventory|combat|enemy|enemies|multiplayer)(\/|\.|$)/i
 ];
 
@@ -151,6 +161,7 @@ const stability = readText("STABILITY.md");
   "Collision And Walkable Behavior",
   "Incident Report System",
   "HUD Behavior",
+  "Extraction And Win Loop",
   "Tone Constraints",
   "AI-Only Workflow"
 ].forEach((heading) => {

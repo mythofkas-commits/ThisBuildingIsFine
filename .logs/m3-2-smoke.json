@@ -324,7 +324,7 @@
       "cameraPosition": {
         "x": 0,
         "y": 1.65,
-        "z": -1.2967099999919534
+        "z": -1.2932000000000001
       },
       "lastStatus": "Incident Report 01 filed. The hallway expressed discomfort with its assigned direction."
     },
@@ -483,9 +483,9 @@
   "movementObserved": true,
   "traversalObserved": true,
   "traversalPosition": {
-    "x": 3.5108099999919524,
+    "x": 3.508649999999999,
     "y": 1.65,
-    "z": -1.2967099999919534
+    "z": -1.2932000000000001
   },
   "connectedRoomTraversalObserved": true,
   "consoleMessages": [],
