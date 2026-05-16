@@ -76,6 +76,9 @@ function walk(dir, ignored = new Set([".git", ".osgrep", "node_modules", "dist"]
   "src/game/collectibles/createIncidentReports.ts",
   "src/game/clarity/clarityState.ts",
   "src/game/clarity/updateClarity.ts",
+  "src/game/narrator/narratorMessages.ts",
+  "src/game/narrator/narratorState.ts",
+  "src/game/narrator/updateNarrator.ts",
   "src/game/extraction/extractionState.ts",
   "src/game/extraction/createExtractionZone.ts",
   "scripts/smoke.mjs"
@@ -127,6 +130,25 @@ if (!clarityData.includes('"incident-report-filed"')) {
   fail("M5 Clarity must include a source-driven Incident Report event.");
 }
 
+const narratorData = readText("src/game/narrator/narratorMessages.ts");
+[
+  "report-collected",
+  "clarity-changed",
+  "locked-extraction",
+  "extraction-approved",
+  "extraction-complete",
+  "restart"
+].forEach((eventId) => {
+  if (!narratorData.includes(`"${eventId}"`)) {
+    fail(`M6 narrator must include source-driven event: ${eventId}`);
+  }
+});
+
+const narratorUpdate = readText("src/game/narrator/updateNarrator.ts");
+if (!narratorUpdate.includes("cooldownFrames")) {
+  fail("M6 narrator must include cooldown/rate-limit behavior.");
+}
+
 const allPaths = walk(".");
 const forbiddenEngineMarkers = allPaths.filter((path) => {
   const lower = path.toLowerCase();
@@ -149,7 +171,6 @@ if (forbiddenEngineMarkers.length > 0) {
 }
 
 const prematureFeaturePatterns = [
-  /(^|\/)(performance-review|performanceReview|narrator|buildingVoice)(\/|\.|$)/i,
   /(^|\/)(meeting|theMeeting)(\/|\.|$)/i,
   /(^|\/)(inventory|combat|enemy|enemies|multiplayer)(\/|\.|$)/i
 ];
@@ -173,6 +194,7 @@ const stability = readText("STABILITY.md");
   "HUD Behavior",
   "Extraction And Win Loop",
   "Clarity System",
+  "Performance Review Narrator",
   "Tone Constraints",
   "AI-Only Workflow"
 ].forEach((heading) => {

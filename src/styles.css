@@ -83,6 +83,13 @@ button {
   color: #fff8e2;
 }
 
+.hud-narrator {
+  margin-top: 6px;
+  max-width: 520px;
+  font-size: 13px;
+  color: rgba(217, 207, 170, 0.92);
+}
+
 .hud-metrics {
   min-width: 210px;
   text-align: right;

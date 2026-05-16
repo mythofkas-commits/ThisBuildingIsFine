@@ -233,3 +233,23 @@ Consequences:
 - M5 does not add a Clarity fail condition.
 - HUD and status messages communicate Clarity changes in a calm, dry voice.
 - Future low-Clarity sign contradictions or HUD unreliability can build on the Clarity state.
+
+## D013 - Add Source-Driven Performance Review Narrator For M6
+
+Status: Accepted
+
+Context:
+M6 needs the building to gain a dry, calm, bureaucratic voice without adding audio, text-to-speech, hazards, enemies, or new M7+ gameplay systems.
+
+Decision:
+Add a dedicated narrator subsystem with source-defined event message pools, frame-based cooldowns, a short emission history, and a HUD narrator line separate from the core gameplay status. The narrator reacts to existing events: report collection, Clarity changes, locked extraction attempts, extraction approval, extraction completion, restart, and selected room entries.
+
+Rationale:
+- Keeps the voice inspectable and deterministic for smoke testing.
+- Preserves existing report, Clarity, extraction, and restart status behavior.
+- Prevents repeated frame-level triggers from spamming the player.
+
+Consequences:
+- M6 adds text-only narrator messages, not voice audio.
+- Future Performance Review rules can extend event pools and trigger conditions without rewriting M1-M5 systems.
+- M7 The Meeting remains deferred.

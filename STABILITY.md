@@ -78,6 +78,14 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - M5 Clarity must remain subtle, non-punitive, and non-horror.
 - Clarity must not make the HUD unreadable or introduce nausea-inducing effects.
 
+### Performance Review Narrator
+
+- The narrator exists as a source-driven text system once M6 begins.
+- The narrator reacts to existing game events without blocking gameplay.
+- Narrator messages remain dry, calm, bureaucratic, surreal, and non-dark.
+- Narrator messages must be rate-limited or cooldown-gated to avoid spam.
+- The narrator must not add voice audio, text-to-speech, hazards, enemies, or M7+ behavior.
+
 ### Tone Constraints
 
 - The game remains uncanny, strange, dryly funny, corporate-surreal, and quietly tense.

@@ -72,13 +72,14 @@ try {
   await page.goto(smokeUrl, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.__TBIF_DEBUG__?.ready === true);
   await page.waitForTimeout(500);
-  await page.screenshot({ path: resolve(logsDir, "m5-reports-before.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m6-reports-before.png"), fullPage: true });
 
   const initialDebug = await page.evaluate(() => window.__TBIF_DEBUG__);
   const initialHud = await page.evaluate(() => ({
     hasHud: Boolean(document.querySelector(".hud")),
     reportText: document.querySelector("[data-hud-report]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? ""
   }));
 
@@ -92,6 +93,7 @@ try {
     debug: window.__TBIF_DEBUG__,
     hudText: document.querySelector("[data-hud-report]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? ""
   }));
 
@@ -111,6 +113,7 @@ try {
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -134,6 +137,7 @@ try {
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -148,6 +152,7 @@ try {
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -157,6 +162,7 @@ try {
     debug: window.__TBIF_DEBUG__,
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     extractionText: document.querySelector("[data-hud-extraction]")?.textContent ?? ""
   }));
 
@@ -167,9 +173,9 @@ try {
     );
   });
   await page.waitForTimeout(250);
-  await page.screenshot({ path: resolve(logsDir, "m5-records-signage.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m6-records-signage.png"), fullPage: true });
 
-  const screenshotPath = resolve(logsDir, "m5-smoke.png");
+  const screenshotPath = resolve(logsDir, "m6-smoke.png");
   await page.screenshot({ path: screenshotPath, fullPage: true });
 
   await page.keyboard.press("r");
@@ -201,6 +207,14 @@ try {
 
   if (!initialDebug.clarity || initialDebug.clarity.value !== 100 || !initialHud.clarityText.includes("Clarity: 100%")) {
     throw new Error(`Smoke test did not observe initial Clarity baseline: ${JSON.stringify({ initialHud, initialDebug })}`);
+  }
+
+  if (
+    !initialDebug.narrator ||
+    !initialHud.narratorText.includes("Performance review pending") ||
+    initialDebug.narrator.history.length < 1
+  ) {
+    throw new Error(`Smoke test did not observe initial narrator state: ${JSON.stringify({ initialHud, initialDebug })}`);
   }
 
   if (!afterRestart || afterRestart.roomCount < 5 || afterRestart.connectionCount < 4) {
@@ -286,6 +300,14 @@ try {
   }
 
   if (
+    !afterCollection.debug.narrator.history.some((entry) => entry.eventId === "report-collected") ||
+    !afterCollection.debug.narrator.history.some((entry) => entry.eventId === "clarity-changed") ||
+    afterCollection.narratorText.length < 12
+  ) {
+    throw new Error(`Smoke test did not observe narrator report/Clarity reaction: ${JSON.stringify(afterCollection)}`);
+  }
+
+  if (
     !lockedExtraction.debug ||
     lockedExtraction.debug.extraction.available ||
     lockedExtraction.debug.extraction.completed ||
@@ -294,6 +316,17 @@ try {
     !lockedExtraction.debug.clarity.appliedEventIds.includes("locked-extraction-approach")
   ) {
     throw new Error(`Smoke test did not observe locked extraction feedback: ${JSON.stringify(lockedExtraction)}`);
+  }
+
+  const lockedNarratorCount = lockedExtraction.debug.narrator.history
+    .filter((entry) => entry.eventId === "locked-extraction")
+    .length;
+  if (
+    lockedNarratorCount !== 1 ||
+    lockedExtraction.debug.narrator.blockedCount < 1 ||
+    lockedExtraction.narratorText.length < 12
+  ) {
+    throw new Error(`Smoke test did not observe narrator locked-extraction cooldown behavior: ${JSON.stringify(lockedExtraction)}`);
   }
 
   if (!afterSecondReport || afterSecondReport.collectedReportCount < 2 || afterSecondReport.extraction.available) {
@@ -310,6 +343,10 @@ try {
     afterAllReports.debug.clarity.value >= initialDebug.clarity.value
   ) {
     throw new Error(`Smoke test did not observe extraction availability after all reports: ${JSON.stringify(afterAllReports)}`);
+  }
+
+  if (!afterAllReports.debug.narrator.history.some((entry) => entry.eventId === "extraction-approved")) {
+    throw new Error(`Smoke test did not observe narrator extraction approval: ${JSON.stringify(afterAllReports)}`);
   }
 
   if (
@@ -333,12 +370,20 @@ try {
   }
 
   if (
+    !afterInteractionWin.debug.narrator.history.some((entry) => entry.eventId === "extraction-complete") ||
+    !afterInteractionWin.narratorText.includes("partially received")
+  ) {
+    throw new Error(`Smoke test did not observe narrator extraction completion: ${JSON.stringify(afterInteractionWin)}`);
+  }
+
+  if (
     afterRestart.collectedReportCount !== 0 ||
     afterRestart.uncollectedReportIds.length !== afterRestart.reportTotal ||
     !afterRestart.reportPositions.every((report) => report.visible) ||
     afterRestart.extraction.available ||
     afterRestart.extraction.completed ||
-    afterRestart.clarity.value !== afterRestart.clarity.baseline
+    afterRestart.clarity.value !== afterRestart.clarity.baseline ||
+    afterRestart.narrator.currentEventId !== "restart"
   ) {
     throw new Error(`Smoke test did not observe report reset after restart: ${JSON.stringify(afterRestart)}`);
   }
@@ -353,9 +398,9 @@ try {
 
   const proof = {
     url: smokeUrl,
-    screenshot: ".logs/m5-smoke.png",
-    reportScreenshot: ".logs/m5-reports-before.png",
-    recordsSignageScreenshot: ".logs/m5-records-signage.png",
+    screenshot: ".logs/m6-smoke.png",
+    reportScreenshot: ".logs/m6-reports-before.png",
+    recordsSignageScreenshot: ".logs/m6-records-signage.png",
     recordsSignage: recordsLabel,
     initialDebug,
     initialHud,
@@ -375,8 +420,8 @@ try {
     server: `vite createServer API on 127.0.0.1:${smokePort}`
   };
 
-  writeFileSync(resolve(logsDir, "m5-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
-  console.log("M5 smoke passed. Screenshot: .logs/m5-smoke.png");
+  writeFileSync(resolve(logsDir, "m6-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
+  console.log("M6 smoke passed. Screenshot: .logs/m6-smoke.png");
 } finally {
   await server.close();
 }

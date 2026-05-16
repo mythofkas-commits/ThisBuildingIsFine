@@ -1,11 +1,14 @@
 import { createInitialClarityState, resetClarity } from "./clarity/clarityState";
 import type { ClarityState } from "./clarity/clarityTypes";
+import { createInitialNarratorState, resetNarrator } from "./narrator/narratorState";
+import type { NarratorState } from "./narrator/narratorTypes";
 
 export interface GameState {
   collectedReportIds: Set<string>;
   reportTotal: number;
   lastCollectedReportId: string | null;
   clarity: ClarityState;
+  narrator: NarratorState;
   extractionAvailable: boolean;
   extractionCompleted: boolean;
   extractionLockedNoticeActive: boolean;
@@ -19,6 +22,7 @@ export function createInitialGameState(reportTotal = 0): GameState {
     reportTotal,
     lastCollectedReportId: null,
     clarity: createInitialClarityState(),
+    narrator: createInitialNarratorState(),
     extractionAvailable: false,
     extractionCompleted: false,
     extractionLockedNoticeActive: false,
@@ -67,6 +71,7 @@ export function resetGameState(state: GameState): void {
   state.collectedReportIds.clear();
   state.lastCollectedReportId = null;
   resetClarity(state.clarity);
+  resetNarrator(state.narrator);
   state.extractionAvailable = false;
   state.extractionCompleted = false;
   state.extractionLockedNoticeActive = false;

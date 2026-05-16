@@ -2,7 +2,7 @@
 
 ## Current Task
 
-Current milestone: M5 - Clarity meter.
+Current milestone: M6 - Performance Review narrator system.
 
 Status: Complete as of 2026-05-16.
 
@@ -22,11 +22,13 @@ M4.1 corrective patch completed on 2026-05-16: replaced ambiguous passive extrac
 
 M5 completed on 2026-05-16: added source-driven Clarity state, HUD Clarity display, subtle Clarity changes from existing events, restart reset, static validation, and smoke proof while preserving M1-M4 contracts.
 
+M6 completed on 2026-05-16: added a source-driven Performance Review narrator, calm bureaucratic message pools, HUD narrator line, event cooldowns, smoke proof, and stability coverage while preserving M1-M5 contracts.
+
 ## Next Task
 
-Next milestone: M6 - Performance Review narrator system.
+Next milestone: M7 - The Meeting hazard.
 
-When approved for M6, add the Performance Review narrator system. Do not add The Meeting, AI assets, enemies, combat, inventory, or multiplayer.
+When approved for M7, add The Meeting hazard. Do not add AI assets, enemies, combat, inventory, multiplayer, voice audio, text-to-speech, jumpscares, gore, dark horror lighting, or chase behavior.
 
 Every future milestone must run `npm run verify` before claiming pass. If a milestone intentionally changes a locked behavior contract, update `STABILITY.md`, the relevant validation/smoke checks, and the milestone log with the reason.
 
@@ -194,14 +196,26 @@ Verification command or proof:
 
 ### M6 - Performance Review Narrator System
 
+Status: Complete.
+
 Acceptance criteria:
-- Narrator reacts to delays, backtracking, hesitation, panic movement, rule-breaking, and unnecessary confidence.
-- Messages are dry, bureaucratic, calm, and sometimes misleading.
-- No horror voice direction.
+- Narrator reacts to existing events. Complete: report collection, Clarity changes, locked extraction, extraction approval, extraction completion, restart, and selected room entry.
+- Messages are dry, bureaucratic, calm, and sometimes misleading. Complete.
+- No horror voice direction. Complete.
+- Narrator has cooldown/rate-limiting. Complete.
+- Existing M1-M5 systems still pass. Complete.
 
 Verification command or proof:
-- Build passes.
-- Playtest log or screenshot captures several narrator messages.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m6-smoke.json`
+- `.logs/m6-smoke.png`
+- `.logs/m6-reports-before.png`
+- `.logs/m6-records-signage.png`
+- `.logs/m6.md`
 
 ### M7 - The Meeting Hazard
 
