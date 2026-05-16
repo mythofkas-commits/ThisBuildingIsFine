@@ -1,0 +1,22 @@
+{
+  "url": "http://127.0.0.1:5173/",
+  "screenshot": ".logs/m1-smoke.png",
+  "debug": {
+    "ready": true,
+    "meshCount": 30,
+    "hasHud": true,
+    "reportVisible": true,
+    "reportObserved": false,
+    "restartCount": 1,
+    "cameraPosition": {
+      "x": 0,
+      "y": 1.65,
+      "z": -5.2
+    },
+    "lastStatus": "Your previous route has been filed under training materials."
+  },
+  "movementObserved": true,
+  "consoleMessages": [],
+  "pageErrors": [],
+  "server": "vite createServer API on 127.0.0.1:5173"
+}

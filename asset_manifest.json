@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "project": "The Building Is Fine",
+  "status": "m3_incident_report_collectibles",
+  "rules": {
+    "default_asset_strategy": "procedural geometry and generated materials first",
+    "generated_assets_begin_milestone": "M9",
+    "manual_import_allowed": false,
+    "realistic_humans_allowed_for_mvp": false,
+    "horror_gore_jump_scares_allowed": false
+  },
+  "allowed_statuses": [
+    "planned",
+    "placeholder",
+    "generated",
+    "imported",
+    "validated",
+    "replace_later",
+    "rejected"
+  ],
+  "required_fields": [
+    "id",
+    "name",
+    "category",
+    "status",
+    "source_type",
+    "prompt_ref",
+    "source_path",
+    "game_path",
+    "format",
+    "scale_notes",
+    "style_notes",
+    "validation",
+    "replacement_notes"
+  ],
+  "assets": [],
+  "placeholders": [
+    {
+      "id": "m2-room-network",
+      "name": "M2 Source-Defined Room Network",
+      "category": "environment",
+      "status": "placeholder",
+      "source_type": "procedural_geometry_source_data",
+      "prompt_ref": ".prompts/environment_assets.md",
+      "source_path": "src/game/rooms/roomData.ts",
+      "game_path": "mesh:m2-office-room-network",
+      "format": "runtime Babylon.js procedural meshes from TypeScript room definitions",
+      "scale_notes": "Five connected 8 by 8 meter office rooms arranged as lobby, cubicles, conference, records, and elevator placeholder.",
+      "style_notes": "Clean fluorescent corporate-surreal rooms with readable signage and calm liminal office geometry.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m2-smoke.json", ".logs/m2-smoke.png", ".logs/m2-1-smoke.json", ".logs/m2-1-smoke.png"]
+      },
+      "replacement_notes": "Future milestones can expand the room data with collectible placements, extraction behavior, Clarity variants, and hazard anchors."
+    },
+    {
+      "id": "m1-office-shell",
+      "name": "M1 Office Shell",
+      "category": "environment",
+      "status": "replace_later",
+      "source_type": "procedural_geometry",
+      "prompt_ref": ".prompts/visual_style.md",
+      "source_path": "src/game/officeScene.ts",
+      "game_path": "mesh:m1-office-root",
+      "format": "runtime Babylon.js procedural meshes",
+      "scale_notes": "Single 14 by 14 meter office-like room with 3.15 meter ceiling and first-person player scale.",
+      "style_notes": "Beige carpet, fluorescent office lights, concrete columns, glass panel, clean but wrong corporate tone.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png", ".logs/m2-1-smoke.json", ".logs/m2-1-report.png"]
+      },
+      "replacement_notes": "Replaced in M2 by m2-room-network; keep as historical proof only."
+    },
+    {
+      "id": "m1-incident-report-placeholder",
+      "name": "M1 Incident Report Placeholder",
+      "category": "collectible",
+      "status": "replace_later",
+      "source_type": "procedural_geometry_dynamic_texture",
+      "prompt_ref": ".prompts/office_props.md",
+      "source_path": "src/game/props/createOfficeProps.ts",
+      "game_path": "mesh:incident-report-placeholder",
+      "format": "runtime Babylon.js plane with DynamicTexture text",
+      "scale_notes": "Small paper-sized plane placed on the desk at readable first-person height.",
+      "style_notes": "Readable office paperwork with restrained red accent; no external asset file.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png"]
+      },
+      "replacement_notes": "Replaced in M3 by source-defined Incident Report collectibles; keep as historical proof only."
+    },
+    {
+      "id": "m3-incident-report-collectibles",
+      "name": "M3 Incident Report Collectibles",
+      "category": "collectible",
+      "status": "validated",
+      "source_type": "procedural_geometry_dynamic_texture_source_data",
+      "prompt_ref": ".prompts/office_props.md",
+      "source_path": "src/game/collectibles/incidentReports.ts",
+      "game_path": "mesh:incident-report-ir-01, mesh:incident-report-ir-02, mesh:incident-report-ir-03",
+      "format": "runtime Babylon.js planes with DynamicTexture text and TypeScript placement data",
+      "scale_notes": "Three paper-sized reports placed on reachable office surfaces in the lobby, cubicles, and elevator room.",
+      "style_notes": "Readable office paperwork with restrained red accents and dry corporate-surreal report text.",
+      "validation": {
+        "status": "validated",
+        "proof": [
+          ".logs/m3-smoke.json",
+          ".logs/m3-reports-before.png",
+          ".logs/m3-smoke.png",
+          ".logs/m3-1-smoke.json",
+          ".logs/m3-1-records-signage.png"
+        ]
+      },
+      "replacement_notes": "M9 may replace DynamicTexture paperwork with generated texture sheets while preserving report IDs and source placement data."
+    },
+    {
+      "id": "m1-elevator-placeholder",
+      "name": "M1 Elevator Placeholder",
+      "category": "environment",
+      "status": "placeholder",
+      "source_type": "procedural_geometry_dynamic_texture",
+      "prompt_ref": ".prompts/environment_assets.md",
+      "source_path": "src/game/officeScene.ts",
+      "game_path": "mesh:elevator-door-left",
+      "format": "runtime Babylon.js procedural meshes",
+      "scale_notes": "Door-sized frame and panels on the front wall.",
+      "style_notes": "Corporate metal doorway with EXIT REQUEST PENDING sign.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png"]
+      },
+      "replacement_notes": "M4 should attach extraction behavior and win/restart flow to the elevator."
+    },
+    {
+      "id": "m1-dom-hud",
+      "name": "M1 DOM HUD Placeholder",
+      "category": "interface",
+      "status": "placeholder",
+      "source_type": "html_css",
+      "prompt_ref": ".prompts/narrator_voice.md",
+      "source_path": "src/game/hud.ts",
+      "game_path": "dom:.hud",
+      "format": "runtime DOM overlay",
+      "scale_notes": "Responsive full-screen overlay sized for desktop browser smoke testing.",
+      "style_notes": "Dry corporate status panel with restart button and minimal guidance.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m1-smoke.json", ".logs/m1-smoke.png"]
+      },
+      "replacement_notes": "M3 and later should expand HUD for report count, Clarity, and system feedback."
+    }
+  ],
+  "validation": {
+    "last_checked": "2026-05-16",
+    "json_parses": true,
+    "in_game_proof": [
+      ".logs/m1-smoke.json",
+      ".logs/m1-smoke.png",
+      ".logs/m2-smoke.json",
+      ".logs/m2-smoke.png",
+      ".logs/m2-1-smoke.json",
+      ".logs/m2-1-smoke.png",
+      ".logs/m2-1-report.png",
+      ".logs/m3-smoke.json",
+      ".logs/m3-reports-before.png",
+      ".logs/m3-smoke.png",
+      ".logs/m3-1-smoke.json",
+      ".logs/m3-1-records-signage.png",
+      ".logs/m3-1-smoke.png"
+    ]
+  }
+}

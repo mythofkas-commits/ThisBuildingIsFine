@@ -1,0 +1,44 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "screenshot": ".logs/m2-smoke.png",
+  "debug": {
+    "ready": true,
+    "meshCount": 116,
+    "roomCount": 5,
+    "roomIds": [
+      "lobby",
+      "cubicles",
+      "conference",
+      "records",
+      "elevator"
+    ],
+    "connectionCount": 5,
+    "collisionBlockerCount": 72,
+    "wallCollisionProbeBlocked": true,
+    "hasHud": true,
+    "reportVisible": true,
+    "reportPosition": {
+      "x": -1.2000000476837158,
+      "y": 1.0199999809265137,
+      "z": -0.4000000059604645
+    },
+    "reportObserved": false,
+    "restartCount": 1,
+    "cameraPosition": {
+      "x": 0,
+      "y": 1.65,
+      "z": -2.6
+    },
+    "lastStatus": "Your previous route has been filed under training materials."
+  },
+  "movementObserved": true,
+  "traversalPosition": {
+    "x": 3.5442899999879303,
+    "y": 1.65,
+    "z": -1.2788900000080463
+  },
+  "connectedRoomTraversalObserved": true,
+  "consoleMessages": [],
+  "pageErrors": [],
+  "server": "vite createServer API on 127.0.0.1:5174"
+}
