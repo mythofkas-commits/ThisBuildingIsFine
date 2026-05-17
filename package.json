@@ -7,6 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
     "check": "tsc --noEmit",
+    "assets:generate": "node scripts/generate-procedural-textures.mjs",
     "smoke": "node scripts/smoke.mjs",
     "validate": "node scripts/validate-project-state.mjs",
     "verify": "npm run check && npm run build && npm run validate && npm run smoke"

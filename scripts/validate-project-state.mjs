@@ -85,7 +85,20 @@ function walk(dir, ignored = new Set([".git", ".osgrep", "node_modules", "dist"]
   "src/game/meeting/updateMeetingHazard.ts",
   "src/game/extraction/extractionState.ts",
   "src/game/extraction/createExtractionZone.ts",
-  "scripts/smoke.mjs"
+  "scripts/smoke.mjs",
+  "scripts/generate-procedural-textures.mjs",
+  ".prompts/textures/m9-office-materials.md",
+  ".prompts/posters/m9-policy-signage.md",
+  "public/assets/textures/generated/m9-office-carpet.png",
+  "public/assets/textures/generated/m9-wall-subtle-variation.png",
+  "public/assets/textures/generated/m9-ceiling-tile-light-panel.png",
+  "public/assets/textures/generated/m9-elevator-checkout-panel.png",
+  "public/assets/textures/generated/m9-incident-report-paper.png",
+  "public/assets/textures/generated/m9-clarity-abstract-overlay.png",
+  "public/assets/posters/generated/m9-policy-poster-hallway.svg",
+  "public/assets/posters/generated/m9-policy-poster-meeting.svg",
+  "public/assets/posters/generated/m9-policy-poster-records.svg",
+  "public/assets/posters/generated/m9-meeting-agenda-card.svg"
 ].forEach(requireFile);
 
 const packageJson = readJson("package.json");
@@ -208,15 +221,17 @@ const roomCreation = readText("src/game/rooms/createRoom.ts");
 const smokeScript = readText("scripts/smoke.mjs");
 [
   "fullRunVisitedRoomIds",
-  "m8-1-smoke.json",
-  "m8-1-meeting.png",
-  "m8-1-signage.png",
+  "m9-smoke.json",
+  "m9-meeting.png",
+  "m9-signage.png",
+  "m9-visual-assets.png",
   "signOrientationChecks",
+  "requiredM9AssetIds",
   "File Audit approved",
   "Proceed to Complete Check-Out"
 ].forEach((requiredText) => {
   if (!smokeScript.includes(requiredText)) {
-    fail(`M8.1 smoke must prove complete-run integration and sign readability: ${requiredText}`);
+    fail(`M9 smoke must prove complete-run integration, sign readability, and visual asset loading: ${requiredText}`);
   }
 });
 
@@ -225,12 +240,88 @@ const officeProps = readText("src/game/props/createOfficeProps.ts");
   "DEFAULT_WALL_SIGN_OFFSET",
   "wallOffsetApplied",
   "facingNormal",
-  "backFaceCulling = true"
+  "backFaceCulling = true",
+  "createWallTextureSign"
 ].forEach((requiredText) => {
   if (!officeProps.includes(requiredText)) {
     fail(`M8.1 wall sign factory must prevent z-fighting and mirrored backface text: ${requiredText}`);
   }
 });
+
+const materialFactory = readText("src/game/materials/createOfficeMaterials.ts");
+[
+  "m9-office-carpet",
+  "m9-wall-subtle-variation",
+  "m9-ceiling-tile-light-panel",
+  "m9-elevator-checkout-panel",
+  "m9-incident-report-paper"
+].forEach((assetId) => {
+  if (!materialFactory.includes(assetId)) {
+    fail(`M9 office materials must load generated/procedural asset: ${assetId}`);
+  }
+});
+
+[
+  "m9-policy-poster-hallway",
+  "m9-policy-poster-meeting",
+  "m9-policy-poster-records",
+  "m9-meeting-agenda-card",
+  "m9-clarity-abstract-overlay"
+].forEach((assetId) => {
+  if (!roomCreation.includes(assetId) && !officeProps.includes(assetId)) {
+    fail(`M9 room/prop creation must place generated/procedural visual asset: ${assetId}`);
+  }
+});
+
+const assetManifest = readJson("asset_manifest.json");
+if (assetManifest) {
+  const requiredFields = assetManifest.required_fields ?? [];
+  const allowedStatuses = new Set(assetManifest.allowed_statuses ?? []);
+  const manifestItems = [...(assetManifest.assets ?? []), ...(assetManifest.placeholders ?? [])];
+  const m9AssetIds = [
+    "m9-office-carpet",
+    "m9-wall-subtle-variation",
+    "m9-ceiling-tile-light-panel",
+    "m9-elevator-checkout-panel",
+    "m9-incident-report-paper",
+    "m9-clarity-abstract-overlay",
+    "m9-policy-poster-hallway",
+    "m9-policy-poster-meeting",
+    "m9-policy-poster-records",
+    "m9-meeting-agenda-card"
+  ];
+
+  manifestItems.forEach((item) => {
+    requiredFields.forEach((field) => {
+      if (!(field in item)) {
+        fail(`Asset manifest entry ${item.id ?? "(missing id)"} missing required field: ${field}`);
+      }
+    });
+    if (item.status && !allowedStatuses.has(item.status)) {
+      fail(`Asset manifest entry ${item.id} uses unsupported status: ${item.status}`);
+    }
+    if (item.source_path && !String(item.source_path).startsWith("mesh:") && !String(item.source_path).startsWith("dom:") && !existsSync(join(root, item.source_path))) {
+      fail(`Asset manifest entry ${item.id} source_path does not exist: ${item.source_path}`);
+    }
+    if (item.prompt_ref && !existsSync(join(root, item.prompt_ref))) {
+      fail(`Asset manifest entry ${item.id} prompt_ref does not exist: ${item.prompt_ref}`);
+    }
+  });
+
+  m9AssetIds.forEach((assetId) => {
+    const item = manifestItems.find((candidate) => candidate.id === assetId);
+    if (!item) {
+      fail(`M9 asset missing from asset_manifest.json: ${assetId}`);
+      return;
+    }
+    if (item.source_type !== "local_procedural_placeholder") {
+      fail(`M9 asset ${assetId} must honestly report local_procedural_placeholder source_type.`);
+    }
+    if (!item.validation || item.validation.status !== "validated") {
+      fail(`M9 asset ${assetId} must include validated manifest validation.`);
+    }
+  });
+}
 
 const playerFacingText = [
   readText("src/game/extraction/extractionState.ts"),

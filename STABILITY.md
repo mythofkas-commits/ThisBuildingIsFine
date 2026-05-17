@@ -125,6 +125,14 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - Do not introduce workflows that require manual scene building, manual asset imports, hidden editor state, manual animation wiring, or repetitive director labor.
 - Babylon.js + TypeScript + Vite remains the active stack unless a future approved milestone explicitly changes the stack decision.
 
+### Generated Visual Asset Pipeline
+
+- Generated or procedural visual assets must be tracked in `asset_manifest.json`.
+- Asset source files must live at stable, source-driven paths and load through code, not editor state.
+- M9 procedural placeholders must remain clearly labeled as placeholders until replaced by approved generated or final candidate assets.
+- Visual assets must not weaken movement, collision, report collection, Clarity, Performance Review, The Meeting, File Audit, restart, or sign readability contracts.
+- Asset additions must avoid dark horror, gore, monsters, jumpscares, oppressive darkness, and unreadable visual noise.
+
 ## Future Changes
 
 Implementation may change. Contracts may change only when a future milestone intentionally changes behavior and updates:

@@ -11,7 +11,8 @@ import {
   createFluorescentPanel,
   createReceptionDesk,
   createRecordShelves,
-  createWallSign
+  createWallSign,
+  createWallTextureSign
 } from "../props/createOfficeProps";
 import type { RoomDefinition, RoomExit } from "./roomTypes";
 
@@ -32,6 +33,7 @@ export function createRoom(
   createRoomLabel(scene, room, parent);
   createRoomProps(scene, room, parent, materials);
   createRunWayfinding(scene, room, parent);
+  createM9VisualAssetBatch(scene, room, parent);
 }
 
 function createFloorAndCeiling(scene: Scene, room: RoomDefinition, parent: TransformNode, materials: OfficeMaterials): void {
@@ -218,6 +220,67 @@ function createRunWayfinding(scene: Scene, room: RoomDefinition, parent: Transfo
         Math.PI,
         parent,
         { width: 1.82, height: 0.42, fontSize: 21 }
+      );
+      break;
+  }
+}
+
+function createM9VisualAssetBatch(scene: Scene, room: RoomDefinition, parent: TransformNode): void {
+  switch (room.id) {
+    case "lobby":
+      createWallTextureSign(
+        scene,
+        "m9-policy-poster-hallway",
+        "m9-policy-poster-hallway",
+        "/assets/posters/generated/m9-policy-poster-hallway.svg",
+        new Vector3(room.center.x - 2.15, 1.7, room.center.z - room.size.depth / 2 + 0.1),
+        0,
+        parent,
+        { width: 0.92, height: 1.28 }
+      );
+      break;
+    case "conference":
+      createWallTextureSign(
+        scene,
+        "m9-policy-poster-meeting",
+        "m9-policy-poster-meeting",
+        "/assets/posters/generated/m9-policy-poster-meeting.svg",
+        new Vector3(room.center.x + room.size.width / 2 - 0.1, 1.7, room.center.z - 1.9),
+        -Math.PI / 2,
+        parent,
+        { width: 0.92, height: 1.28 }
+      );
+      createWallTextureSign(
+        scene,
+        "m9-meeting-agenda-card",
+        "m9-meeting-agenda-card",
+        "/assets/posters/generated/m9-meeting-agenda-card.svg",
+        new Vector3(room.center.x, 1.56, room.center.z + room.size.depth / 2 - 0.1),
+        Math.PI,
+        parent,
+        { width: 0.82, height: 1.12 }
+      );
+      break;
+    case "records":
+      createWallTextureSign(
+        scene,
+        "m9-policy-poster-records",
+        "m9-policy-poster-records",
+        "/assets/posters/generated/m9-policy-poster-records.svg",
+        new Vector3(room.center.x + 1.95, 1.72, room.center.z + room.size.depth / 2 - 0.1),
+        Math.PI,
+        parent,
+        { width: 0.92, height: 1.28 }
+      );
+      createWallTextureSign(
+        scene,
+        "m9-clarity-abstract-overlay",
+        "m9-clarity-abstract-overlay",
+        "/assets/textures/generated/m9-clarity-abstract-overlay.png",
+        new Vector3(room.center.x + room.size.width / 2 - 0.1, 1.42, room.center.z + 1.85),
+        -Math.PI / 2,
+        parent,
+        { width: 0.74, height: 0.74, hasAlpha: true, alpha: 0.86 }
       );
       break;
   }

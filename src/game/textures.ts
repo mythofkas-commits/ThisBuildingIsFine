@@ -1,6 +1,7 @@
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import type { Scene } from "@babylonjs/core/scene";
 
 export interface TextMaterialOptions {
@@ -10,6 +11,17 @@ export interface TextMaterialOptions {
   width?: number;
   height?: number;
   fontSize?: number;
+}
+
+export interface ImageTextureMaterialOptions {
+  assetId: string;
+  path: string;
+  tint?: Color3;
+  alpha?: number;
+  uScale?: number;
+  vScale?: number;
+  hasAlpha?: boolean;
+  emissive?: Color3;
 }
 
 export function createTextMaterial(
@@ -49,5 +61,33 @@ export function createTextMaterial(
   material.diffuseTexture = texture;
   material.emissiveColor = new Color3(0.22, 0.2, 0.16);
   material.specularColor = new Color3(0.04, 0.04, 0.04);
+  return material;
+}
+
+export function createImageTextureMaterial(
+  scene: Scene,
+  name: string,
+  options: ImageTextureMaterialOptions
+): StandardMaterial {
+  const texture = new Texture(options.path, scene, false, false);
+  texture.uScale = options.uScale ?? 1;
+  texture.vScale = options.vScale ?? 1;
+  texture.hasAlpha = options.hasAlpha ?? false;
+
+  const material = new StandardMaterial(`${name}-material`, scene);
+  material.diffuseTexture = texture;
+  material.diffuseColor = options.tint ?? Color3.White();
+  material.specularColor = new Color3(0.05, 0.05, 0.045);
+  material.alpha = options.alpha ?? 1;
+  material.useAlphaFromDiffuseTexture = options.hasAlpha ?? false;
+  if (options.emissive) {
+    material.emissiveColor = options.emissive;
+  }
+  material.metadata = {
+    kind: "m9-generated-asset-material",
+    assetId: options.assetId,
+    texturePath: options.path,
+    sourceType: "local_procedural_placeholder"
+  };
   return material;
 }

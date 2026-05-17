@@ -2,9 +2,9 @@
 
 ## Current Task
 
-Current milestone: M8 - First complete 5-room run.
+Current milestone: M9 - AI-generated visual assets/textures.
 
-Status: Complete as of 2026-05-16.
+Status: Complete as of 2026-05-17.
 
 M2 replaced the single M1 office shell with a source-defined five-room office network, reusable room and prop factories, shared office materials, updated smoke proof, and preserved the M1 movement/camera/restart/HUD foundation.
 
@@ -30,11 +30,13 @@ M8 completed on 2026-05-17: integrated the first complete five-room run with sou
 
 M8.1 corrective patch completed on 2026-05-17: fixed wall-sign z-fighting and mirrored/backface readability by offsetting wall signs from surfaces, culling sign backfaces, correcting east/west sign rotations, and adding sign-readability smoke/validation proof while preserving the M8 complete run.
 
+M9 completed on 2026-05-17: added prompt-backed, deterministic local procedural placeholder textures/posters, integrated them through Babylon material loading and non-collidable wall planes, validated manifest/source files, and captured browser smoke proof while preserving the M1-M8 game loop.
+
 ## Next Task
 
-Next milestone: M9 - AI-generated visual assets/textures.
+Next milestone: M10 - Polish, screenshots, browser smoke tests.
 
-When approved for M9, introduce AI-generated visual assets/textures through the approved asset pipeline. Do not add enemies, combat, inventory, multiplayer, voice audio, text-to-speech, jumpscares, gore, dark horror lighting, or chase behavior.
+When approved for M10, perform a polish and proof pass on the existing vertical-slice foundation. Do not add enemies, combat, inventory, multiplayer, voice audio, text-to-speech, jumpscares, gore, dark horror lighting, or chase behavior.
 
 Every future milestone must run `npm run verify` before claiming pass. If a milestone intentionally changes a locked behavior contract, update `STABILITY.md`, the relevant validation/smoke checks, and the milestone log with the reason.
 
@@ -277,16 +279,27 @@ Verification command or proof:
 
 ### M9 - AI-Generated Visual Assets/Textures
 
+Status: Complete.
+
 Acceptance criteria:
-- Generated or requested assets follow prompt files.
-- Assets are tracked in `asset_manifest.json`.
-- Assets load in-game.
-- Placeholders remain replaceable.
+- Generated or requested assets follow prompt files. Complete: `.prompts/textures/m9-office-materials.md` and `.prompts/posters/m9-policy-signage.md`.
+- Assets are tracked in `asset_manifest.json`. Complete: 10 M9 procedural placeholder entries.
+- Assets load in-game. Complete: smoke proof confirms all required M9 asset IDs loaded through Babylon materials.
+- Placeholders remain replaceable. Complete: all M9 assets use `local_procedural_placeholder` source type and replacement notes.
 
 Verification command or proof:
-- Build passes.
-- Manifest validation.
-- Browser screenshot proof.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m9-smoke.json`
+- `.logs/m9-smoke.png`
+- `.logs/m9-reports-before.png`
+- `.logs/m9-meeting.png`
+- `.logs/m9-signage.png`
+- `.logs/m9-visual-assets.png`
+- `.logs/m9.md`
 
 ### M10 - Polish, Screenshots, Browser Smoke Tests
 

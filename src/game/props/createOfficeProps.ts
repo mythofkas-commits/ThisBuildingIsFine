@@ -7,7 +7,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
 import type { OfficeMaterials } from "../materials/createOfficeMaterials";
-import { createTextMaterial } from "../textures";
+import { createImageTextureMaterial, createTextMaterial } from "../textures";
 
 export type Vec3Tuple = [number, number, number];
 
@@ -16,6 +16,14 @@ interface WallSignOptions {
   height?: number;
   fontSize?: number;
   wallOffset?: number;
+}
+
+interface WallTextureSignOptions {
+  width?: number;
+  height?: number;
+  wallOffset?: number;
+  hasAlpha?: boolean;
+  alpha?: number;
 }
 
 const DEFAULT_WALL_SIGN_OFFSET = 0.045;
@@ -92,6 +100,50 @@ export function createWallSign(
     width: 512,
     height: 180,
     fontSize
+  });
+  sign.material.backFaceCulling = true;
+  sign.parent = parent;
+  return sign;
+}
+
+export function createWallTextureSign(
+  scene: Scene,
+  name: string,
+  assetId: string,
+  texturePath: string,
+  position: Vector3,
+  rotationY: number,
+  parent: TransformNode,
+  options: WallTextureSignOptions = {}
+): Mesh {
+  const width = options.width ?? 1.12;
+  const height = options.height ?? 1.54;
+  const wallOffset = options.wallOffset ?? DEFAULT_WALL_SIGN_OFFSET;
+  const facingNormal = getFacingNormal(rotationY);
+  const sign = MeshBuilder.CreatePlane(name, { width, height }, scene);
+  sign.position = position.add(facingNormal.scale(wallOffset));
+  sign.rotation.y = rotationY;
+  sign.checkCollisions = false;
+  sign.metadata = {
+    kind: "decorative-sign",
+    collision: "intentionally-non-collidable",
+    wallOffsetApplied: wallOffset,
+    facingNormal: {
+      x: facingNormal.x,
+      y: facingNormal.y,
+      z: facingNormal.z
+    },
+    width,
+    height,
+    generatedAsset: true,
+    assetId,
+    texturePath
+  };
+  sign.material = createImageTextureMaterial(scene, `${name}-texture`, {
+    assetId,
+    path: texturePath,
+    hasAlpha: options.hasAlpha,
+    alpha: options.alpha
   });
   sign.material.backFaceCulling = true;
   sign.parent = parent;
@@ -205,4 +257,14 @@ export function createElevatorPlaceholder(scene: Scene, parent: TransformNode, m
   createBox(scene, "elevator-door-left", [1.16, 2.45, 0.12], [x - 0.6, 1.22, z - 0.08], materials.metal, parent, true);
   createBox(scene, "elevator-door-right", [1.16, 2.45, 0.12], [x + 0.6, 1.22, z - 0.08], materials.metal, parent, true);
   createWallSign(scene, "sign-exit-request-pending", ["EXIT REQUEST", "PENDING"], new Vector3(x, 2.72, z - 0.18), Math.PI, parent);
+  createWallTextureSign(
+    scene,
+    "m9-elevator-checkout-panel-sign",
+    "m9-elevator-checkout-panel",
+    "/assets/textures/generated/m9-elevator-checkout-panel.png",
+    new Vector3(x + 1.7, 1.38, z - 0.18),
+    Math.PI,
+    parent,
+    { width: 0.48, height: 0.88 }
+  );
 }
