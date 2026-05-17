@@ -4,6 +4,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
+import { createWallSign } from "../props/createOfficeProps";
 import { createTextMaterial } from "../textures";
 import { extractionZoneDefinition } from "./extractionState";
 import type { ExtractionAvailability, ExtractionZone, ExtractionZoneDefinition } from "./extractionTypes";
@@ -33,20 +34,21 @@ export function createExtractionZone(
   };
   marker.parent = parent;
 
-  const sign = MeshBuilder.CreatePlane("extraction-status-sign", { width: 1.55, height: 0.42 }, scene);
-  sign.position = new Vector3(definition.position.x, 2.24, definition.position.z + 1.72);
-  sign.rotation.y = Math.PI;
-  sign.material = createStatusSignMaterial(scene, "EXTRACTION", "PENDING");
-  sign.material.backFaceCulling = false;
-  sign.checkCollisions = false;
+  const sign = createWallSign(
+    scene,
+    "extraction-status-sign",
+    ["CHECK-OUT", "PENDING"],
+    new Vector3(definition.position.x, 2.24, definition.position.z + 1.72),
+    Math.PI,
+    parent,
+    { width: 1.55, height: 0.42, fontSize: 25 }
+  );
+  sign.material = createStatusSignMaterial(scene, "CHECK-OUT", "PENDING");
+  sign.material.backFaceCulling = true;
   sign.metadata = {
-    kind: "decorative-sign",
-    extractionZoneId: definition.id,
-    collision: "intentionally-non-collidable",
-    width: 1.55,
-    height: 0.42
+    ...sign.metadata,
+    extractionZoneId: definition.id
   };
-  sign.parent = parent;
 
   return {
     definition,
@@ -61,7 +63,7 @@ export function createExtractionZone(
     setAvailability: (availability) => {
       marker.material = getMarkerMaterial(availability, lockedMaterial, availableMaterial, completeMaterial);
       sign.material = getSignMaterial(scene, availability);
-      sign.material.backFaceCulling = false;
+      sign.material.backFaceCulling = true;
     }
   };
 }
@@ -98,10 +100,10 @@ function getSignMaterial(scene: Scene, availability: ExtractionAvailability): St
   }
 
   if (availability === "available") {
-    return createStatusSignMaterial(scene, "EXTRACTION", "APPROVED");
+    return createStatusSignMaterial(scene, "FILE AUDIT", "APPROVED");
   }
 
-  return createStatusSignMaterial(scene, "EXTRACTION", "PENDING");
+  return createStatusSignMaterial(scene, "CHECK-OUT", "PENDING");
 }
 
 function createStatusSignMaterial(scene: Scene, topLine: string, bottomLine: string): StandardMaterial {

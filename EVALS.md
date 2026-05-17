@@ -109,7 +109,7 @@ Required from every content milestone:
 - M5: Clarity meter changes gameplay feedback.
 - M6: Performance Review narrator reacts to player behavior.
 - M7: The Meeting creates spatial/puzzle pressure without monster behavior.
-- M8: Complete five-room run works end to end.
+- M8: Complete five-room run works end to end with reports, Clarity, Performance Review, The Meeting, File Audit completion, and restart covered by smoke proof.
 - M9: Generated visual assets/textures appear in-game and are tracked.
 - M10: Polish pass, screenshots, smoke tests, performance sanity.
 - M11: First playable vertical slice accepted by director.

@@ -45,7 +45,7 @@ export const m2RoomNetwork: RoomNetworkDefinition = {
     },
     {
       id: "elevator",
-      label: "Elevator Extraction Placeholder",
+      label: "Complete Check-Out Elevator",
       kind: "elevator",
       center: { x: 16, z: 8 },
       size: ROOM_SIZE,

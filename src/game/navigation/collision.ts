@@ -12,6 +12,8 @@ interface BlockerBounds {
 
 export interface MovementCollision {
   blockerCount: number;
+  dynamicBlockerCount: number;
+  addDynamicMesh: (mesh: AbstractMesh) => void;
   resolve: (current: Vector3, requestedDelta: Vector3) => Vector3;
   blocksPosition: (position: Vector3) => boolean;
 }
@@ -27,23 +29,33 @@ export function createMovementCollision(scene: Scene): MovementCollision {
 
   const blockers = scene.meshes
     .filter(isMovementBlocker)
-    .map((mesh) => {
-      const box = mesh.getBoundingInfo().boundingBox;
-      return {
-        name: mesh.name,
-        minX: box.minimumWorld.x,
-        maxX: box.maximumWorld.x,
-        minZ: box.minimumWorld.z,
-        maxZ: box.maximumWorld.z
-      };
-    });
+    .map(getBlockerBounds);
+  const dynamicBlockerMeshes: AbstractMesh[] = [];
 
   function blocksPosition(position: Vector3): boolean {
-    return blockers.some((blocker) => circleIntersectsAabb(position, blocker));
+    return (
+      blockers.some((blocker) => circleIntersectsAabb(position, blocker)) ||
+      dynamicBlockerMeshes.some((mesh) => {
+        if (!isMovementBlocker(mesh)) {
+          return false;
+        }
+        return circleIntersectsAabb(position, getBlockerBounds(mesh));
+      })
+    );
   }
 
   return {
-    blockerCount: blockers.length,
+    get blockerCount() {
+      return blockers.length + dynamicBlockerMeshes.length;
+    },
+    get dynamicBlockerCount() {
+      return dynamicBlockerMeshes.length;
+    },
+    addDynamicMesh: (mesh) => {
+      if (!dynamicBlockerMeshes.includes(mesh)) {
+        dynamicBlockerMeshes.push(mesh);
+      }
+    },
     resolve: (current, requestedDelta) => {
       const resolved = current.clone();
       const xCandidate = new Vector3(resolved.x + requestedDelta.x, resolved.y, resolved.z);
@@ -61,6 +73,18 @@ export function createMovementCollision(scene: Scene): MovementCollision {
       return resolved;
     },
     blocksPosition
+  };
+}
+
+function getBlockerBounds(mesh: AbstractMesh): BlockerBounds {
+  mesh.computeWorldMatrix(true);
+  const box = mesh.getBoundingInfo().boundingBox;
+  return {
+    name: mesh.name,
+    minX: box.minimumWorld.x,
+    maxX: box.maximumWorld.x,
+    minZ: box.minimumWorld.z,
+    maxZ: box.maximumWorld.z
   };
 }
 

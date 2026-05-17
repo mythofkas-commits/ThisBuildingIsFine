@@ -31,6 +31,7 @@ export function createRoom(
   createLighting(scene, room, parent, materials);
   createRoomLabel(scene, room, parent);
   createRoomProps(scene, room, parent, materials);
+  createRunWayfinding(scene, room, parent);
 }
 
 function createFloorAndCeiling(scene: Scene, room: RoomDefinition, parent: TransformNode, materials: OfficeMaterials): void {
@@ -123,7 +124,7 @@ function getRoomLabelPlacement(room: RoomDefinition): { position: Vector3; rotat
   if (!room.exits.includes("west")) {
     return {
       position: new Vector3(room.center.x - room.size.width / 2 + inset, labelY, room.center.z),
-      rotationY: -Math.PI / 2
+      rotationY: Math.PI / 2
     };
   }
 
@@ -136,7 +137,7 @@ function getRoomLabelPlacement(room: RoomDefinition): { position: Vector3; rotat
 
   return {
     position: new Vector3(room.center.x + room.size.width / 2 - inset, labelY, room.center.z),
-    rotationY: Math.PI / 2
+    rotationY: -Math.PI / 2
   };
 }
 
@@ -158,6 +159,66 @@ function createRoomProps(scene: Scene, room: RoomDefinition, parent: TransformNo
     case "elevator":
       createElevatorPlaceholder(scene, parent, materials, room.center.x, room.center.z + room.size.depth / 2 - 0.18);
       createDesk(scene, parent, materials, room.center.x - 2.1, room.center.z - 1.7, "elevator-waiting-desk");
+      break;
+  }
+}
+
+function createRunWayfinding(scene: Scene, room: RoomDefinition, parent: TransformNode): void {
+  switch (room.id) {
+    case "lobby":
+      createWallSign(
+        scene,
+        "m8-wayfinding-lobby",
+        ["REPORT 1", "OPEN OFFICE EAST"],
+        new Vector3(room.center.x + 2.2, 1.72, room.center.z - room.size.depth / 2 + 0.09),
+        0,
+        parent,
+        { width: 1.78, height: 0.4, fontSize: 22 }
+      );
+      break;
+    case "cubicles":
+      createWallSign(
+        scene,
+        "m8-wayfinding-cubicles",
+        ["REPORT 2", "MEETING EAST", "RECORDS NORTH"],
+        new Vector3(room.center.x, 1.74, room.center.z - room.size.depth / 2 + 0.09),
+        0,
+        parent,
+        { width: 1.95, height: 0.5, fontSize: 20 }
+      );
+      break;
+    case "conference":
+      createWallSign(
+        scene,
+        "m8-wayfinding-conference",
+        ["MEETING ZONE", "LEAVE TO DECLINE"],
+        new Vector3(room.center.x + room.size.width / 2 - 0.09, 1.72, room.center.z + 1.9),
+        -Math.PI / 2,
+        parent,
+        { width: 1.84, height: 0.42, fontSize: 21 }
+      );
+      break;
+    case "records":
+      createWallSign(
+        scene,
+        "m8-wayfinding-records",
+        ["RECORDS REVIEWED", "CHECK-OUT EAST"],
+        new Vector3(room.center.x - room.size.width / 2 + 0.09, 1.72, room.center.z - 1.7),
+        Math.PI / 2,
+        parent,
+        { width: 1.86, height: 0.42, fontSize: 21 }
+      );
+      break;
+    case "elevator":
+      createWallSign(
+        scene,
+        "m8-wayfinding-elevator",
+        ["REPORT 3", "FILE AUDIT HERE"],
+        new Vector3(room.center.x - 1.8, 1.72, room.center.z + room.size.depth / 2 - 0.09),
+        Math.PI,
+        parent,
+        { width: 1.82, height: 0.42, fontSize: 21 }
+      );
       break;
   }
 }

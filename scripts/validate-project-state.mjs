@@ -79,6 +79,10 @@ function walk(dir, ignored = new Set([".git", ".osgrep", "node_modules", "dist"]
   "src/game/narrator/narratorMessages.ts",
   "src/game/narrator/narratorState.ts",
   "src/game/narrator/updateNarrator.ts",
+  "src/game/meeting/meetingTypes.ts",
+  "src/game/meeting/meetingState.ts",
+  "src/game/meeting/createMeetingHazard.ts",
+  "src/game/meeting/updateMeetingHazard.ts",
   "src/game/extraction/extractionState.ts",
   "src/game/extraction/createExtractionZone.ts",
   "scripts/smoke.mjs"
@@ -149,6 +153,106 @@ if (!narratorUpdate.includes("cooldownFrames")) {
   fail("M6 narrator must include cooldown/rate-limit behavior.");
 }
 
+const meetingState = readText("src/game/meeting/meetingState.ts");
+[
+  'id: "the-meeting"',
+  'roomId: "conference"',
+  "exposureFramesForClarity"
+].forEach((requiredText) => {
+  if (!meetingState.includes(requiredText)) {
+    fail(`M7 Meeting state must include source-driven contract: ${requiredText}`);
+  }
+});
+
+const meetingCreate = readText("src/game/meeting/createMeetingHazard.ts");
+[
+  "createMeetingHazard",
+  "meeting-chair",
+  "meeting-agenda",
+  "addDynamicMesh"
+].forEach((requiredText) => {
+  if (!meetingCreate.includes(requiredText)) {
+    fail(`M7 Meeting hazard must create source-driven office pressure objects: ${requiredText}`);
+  }
+});
+
+const meetingUpdate = readText("src/game/meeting/updateMeetingHazard.ts");
+[
+  "updateMeetingHazard",
+  "meeting-exposure",
+  "meeting-noticed",
+  "meeting-escaped"
+].forEach((requiredText) => {
+  if (!meetingUpdate.includes(requiredText)) {
+    fail(`M7 Meeting hazard must include activation, escape, and Clarity behavior: ${requiredText}`);
+  }
+});
+
+if (meetingUpdate.match(/chase|enemy|monster|combat|damage|death/i)) {
+  fail("M7 Meeting hazard must remain an event, not a chase enemy, combatant, or fail-state monster.");
+}
+
+const roomCreation = readText("src/game/rooms/createRoom.ts");
+[
+  "m8-wayfinding-lobby",
+  "m8-wayfinding-cubicles",
+  "m8-wayfinding-conference",
+  "m8-wayfinding-records",
+  "m8-wayfinding-elevator"
+].forEach((requiredText) => {
+  if (!roomCreation.includes(requiredText)) {
+    fail(`M8 complete run must include source-driven wayfinding marker: ${requiredText}`);
+  }
+});
+
+const smokeScript = readText("scripts/smoke.mjs");
+[
+  "fullRunVisitedRoomIds",
+  "m8-1-smoke.json",
+  "m8-1-meeting.png",
+  "m8-1-signage.png",
+  "signOrientationChecks",
+  "File Audit approved",
+  "Proceed to Complete Check-Out"
+].forEach((requiredText) => {
+  if (!smokeScript.includes(requiredText)) {
+    fail(`M8.1 smoke must prove complete-run integration and sign readability: ${requiredText}`);
+  }
+});
+
+const officeProps = readText("src/game/props/createOfficeProps.ts");
+[
+  "DEFAULT_WALL_SIGN_OFFSET",
+  "wallOffsetApplied",
+  "facingNormal",
+  "backFaceCulling = true"
+].forEach((requiredText) => {
+  if (!officeProps.includes(requiredText)) {
+    fail(`M8.1 wall sign factory must prevent z-fighting and mirrored backface text: ${requiredText}`);
+  }
+});
+
+const playerFacingText = [
+  readText("src/game/extraction/extractionState.ts"),
+  readText("src/game/extraction/createExtractionZone.ts"),
+  readText("src/game/hud.ts"),
+  readText("src/game/narrator/narratorMessages.ts"),
+  readText("src/game/rooms/roomData.ts")
+].join("\n");
+
+[
+  "Extraction approved",
+  "Extraction unavailable",
+  "Extraction Elevator",
+  "EXTRACTION",
+  "Proceed to elevator",
+  "approved extraction"
+].forEach((forbiddenText) => {
+  if (playerFacingText.includes(forbiddenText)) {
+    fail(`M8 player-facing text should avoid tactical extraction wording: ${forbiddenText}`);
+  }
+});
+
 const allPaths = walk(".");
 const forbiddenEngineMarkers = allPaths.filter((path) => {
   const lower = path.toLowerCase();
@@ -171,7 +275,6 @@ if (forbiddenEngineMarkers.length > 0) {
 }
 
 const prematureFeaturePatterns = [
-  /(^|\/)(meeting|theMeeting)(\/|\.|$)/i,
   /(^|\/)(inventory|combat|enemy|enemies|multiplayer)(\/|\.|$)/i
 ];
 
@@ -192,9 +295,12 @@ const stability = readText("STABILITY.md");
   "Collision And Walkable Behavior",
   "Incident Report System",
   "HUD Behavior",
+  "Sign Readability",
   "Extraction And Win Loop",
   "Clarity System",
   "Performance Review Narrator",
+  "The Meeting Hazard",
+  "Complete Five-Room Run",
   "Tone Constraints",
   "AI-Only Workflow"
 ].forEach((heading) => {

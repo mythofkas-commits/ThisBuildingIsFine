@@ -30,7 +30,7 @@ export const narratorMessages: Record<NarratorEventId, NarratorMessageDefinition
   "extraction-approved": {
     eventId: "extraction-approved",
     cooldownFrames: 120,
-    messages: ["Extraction approved. Please leave before the building reconsiders."]
+    messages: ["File Audit approved. Please submit findings before the building reconsiders."]
   },
   "extraction-complete": {
     eventId: "extraction-complete",
@@ -51,5 +51,29 @@ export const narratorMessages: Record<NarratorEventId, NarratorMessageDefinition
     eventId: "elevator-room-entered",
     cooldownFrames: 180,
     messages: ["The elevator is experiencing a brief disagreement with verticality."]
+  },
+  "meeting-noticed": {
+    eventId: "meeting-noticed",
+    cooldownFrames: 220,
+    messages: [
+      "A meeting has noticed your availability.",
+      "Your attendance has been inferred."
+    ]
+  },
+  "meeting-reminder": {
+    eventId: "meeting-reminder",
+    cooldownFrames: 240,
+    messages: [
+      "The chairs are aligning around a shared misunderstanding.",
+      "Please remain inside the agenda until consensus is achieved."
+    ]
+  },
+  "meeting-escaped": {
+    eventId: "meeting-escaped",
+    cooldownFrames: 120,
+    messages: [
+      "The meeting has failed to reach you.",
+      "Leaving early may improve your clarity."
+    ]
   }
 };

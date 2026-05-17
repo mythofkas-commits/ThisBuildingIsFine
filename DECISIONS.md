@@ -253,3 +253,64 @@ Consequences:
 - M6 adds text-only narrator messages, not voice audio.
 - Future Performance Review rules can extend event pools and trigger conditions without rewriting M1-M5 systems.
 - M7 The Meeting remains deferred.
+
+## D014 - Add The Meeting As A Source-Driven Spatial Event For M7
+
+Status: Accepted
+
+Context:
+M7 needs the first surreal hazard without introducing enemies, combat, chase behavior, dark horror, voice audio, generated assets, or manual scene placement.
+
+Decision:
+Add The Meeting as a dedicated source-driven conference-room event. It owns inspectable state, a source-defined trigger zone, procedural office objects, dynamic collision blockers, HUD feedback, narrator events, subtle one-time Clarity exposure, escape behavior, and smoke-test proof.
+
+Rationale:
+- Keeps the hazard expandable without turning it into a creature or AI enemy.
+- Uses procedural chairs, a side table, and an agenda panel already compatible with the office style.
+- Preserves AI-only authoring because all positions, messages, collision, and verification live in source and scripts.
+- Spatial pressure stays readable because the arrangement is partial and leaving the zone releases the event.
+
+Consequences:
+- Movement collision now supports registered dynamic blockers for source-driven moving office objects.
+- The Meeting becomes a locked M7 stability contract.
+- Future M8 run integration can use the same Meeting zone without rewriting the M1-M6 systems.
+
+## D015 - Treat M8 As Integration And Pacing, Not A New System
+
+Status: Accepted
+
+Context:
+M8 needs the first complete five-room run to work end to end with all approved systems active, but it must not add M9 assets, new hazards, enemies, combat, inventory, or future milestone systems.
+
+Decision:
+Keep M8 to integration: add small source-driven wayfinding signs in the existing five rooms, tune player-facing check-out wording from tactical extraction language to File Audit / Complete Check-Out, and expand browser smoke proof so it records all five room IDs plus report collection, Meeting behavior, Records visit, File Audit completion, and restart.
+
+Rationale:
+- The approved systems already exist; M8 should prove the loop, not expand scope.
+- File Audit / Complete Check-Out wording better matches the corporate-audit fantasy.
+- Source-driven signs preserve the AI-only workflow and avoid manual placement.
+
+Consequences:
+- Internal M4 extraction module names remain in code for continuity, but player-facing text avoids extraction wording.
+- M8 smoke becomes the integration proof for the complete five-room run.
+- M9 remains the first approved milestone for generated visual assets/textures.
+
+## D016 - Offset Wall Signs And Render Only Readable Front Faces
+
+Status: Accepted
+
+Context:
+Manual M8 playtest found that wall signs flickered and sometimes appeared mirrored or backwards. The behavior looked like z-fighting and backface readability, not intentional surrealism.
+
+Decision:
+Centralize wall-sign placement in the sign helper: offset wall signs a few centimeters along their readable facing normal, keep sign planes non-collidable, and enable backface culling so mirrored backside text is not used as the readable surface. Correct east/west wall sign rotations so the front face points into the room.
+
+Rationale:
+- A central sign-factory fix prevents repeated coordinate patching.
+- Offsetting planes prevents wall coplanarity artifacts.
+- Backface culling exposes orientation mistakes instead of showing mirrored text.
+- The fix preserves procedural signs and avoids M9 asset work.
+
+Consequences:
+- Smoke proof checks sign wall offsets, front-facing normals for representative signs, and full M8 run completion.
+- Future wall signs should be created through `createWallSign` unless they have a specific non-wall reason not to.

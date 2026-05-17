@@ -59,6 +59,14 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - Collecting a report updates HUD text/status.
 - Restart updates HUD state back to the reset report count.
 
+### Sign Readability
+
+- Wall-mounted signs must be offset from wall surfaces enough to avoid z-fighting during normal movement.
+- Wall-mounted sign text must face the intended room-side viewing direction.
+- Wall-mounted signs must not rely on mirrored backface rendering for readability.
+- Decorative signs must remain non-collidable unless a future approved milestone explicitly changes that contract.
+- Sign readability fixes must preserve doorway traversal and the complete five-room run.
+
 ### Extraction And Win Loop
 
 - Extraction must remain source-driven and associated with the elevator room.
@@ -85,6 +93,25 @@ Do not weaken, delete, or bypass tests to hide a broken change.
 - Narrator messages remain dry, calm, bureaucratic, surreal, and non-dark.
 - Narrator messages must be rate-limited or cooldown-gated to avoid spam.
 - The narrator must not add voice audio, text-to-speech, hazards, enemies, or M7+ behavior.
+
+### The Meeting Hazard
+
+- The Meeting exists as a source-driven event system once M7 begins.
+- The Meeting is associated with the conference room and must not behave like a creature, enemy, chase, combatant, or jump scare.
+- The Meeting may rearrange source-defined office objects into a partial ring, corridor, or agenda-like pressure shape.
+- The Meeting must leave a readable escape path and must not permanently trap the player or block required progress.
+- Meeting exposure may affect Clarity subtly, but it must remain non-punitive, non-horror, and restartable.
+- Leaving the Meeting zone must end or reduce the hazard pressure.
+- Restart must return The Meeting to its idle source-defined state.
+- Meeting HUD/status/narrator output must remain calm, dry, bureaucratic, readable, and rate-limited.
+
+### Complete Five-Room Run
+
+- Once M8 begins, one complete run must connect all five approved rooms: `lobby`, `cubicles`, `conference`, `records`, and `elevator`.
+- The complete run must allow the player to collect all required Incident Reports, experience or avoid The Meeting, visit Records, reach Complete Check-Out, file the audit, and restart without a page reload.
+- Required progress must not depend on manual scene edits, external assets, generated textures, inventory, combat, enemies, chase logic, or future milestone systems.
+- Player-facing check-out wording should prefer File Audit, Submit Findings, or Complete Check-Out. Internal code may keep historical extraction names where they refer to existing M4 architecture.
+- Smoke proof must cover the full run path or an equivalent scripted browser path before M8 is considered complete.
 
 ### Tone Constraints
 
