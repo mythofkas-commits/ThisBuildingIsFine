@@ -71,8 +71,12 @@ try {
 
   await page.goto(smokeUrl, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.__TBIF_DEBUG__?.ready === true);
+  await page.waitForFunction(() => {
+    const assets = window.__TBIF_DEBUG__?.generatedAssets ?? [];
+    return assets.length >= 10 && assets.every((asset) => asset.loaded);
+  });
   await page.waitForTimeout(500);
-  await page.screenshot({ path: resolve(logsDir, "m8-1-reports-before.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m9-reports-before.png"), fullPage: true });
 
   const initialDebug = await page.evaluate(() => window.__TBIF_DEBUG__);
   const initialHud = await page.evaluate(() => ({
@@ -111,7 +115,7 @@ try {
     );
   });
   await page.waitForTimeout(2600);
-  await page.screenshot({ path: resolve(logsDir, "m8-1-meeting.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m9-meeting.png"), fullPage: true });
   const meetingActive = await page.evaluate(() => ({
     debug: window.__TBIF_DEBUG__,
     meetingText: document.querySelector("[data-hud-meeting]")?.textContent ?? "",
@@ -214,14 +218,23 @@ try {
 
   await page.evaluate(() => {
     window.__TBIF_PROOF_CAMERA__?.(
+      { x: -1.45, y: 1.65, z: -2.42 },
+      { x: -2.15, y: 1.7, z: -3.88 }
+    );
+  });
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: resolve(logsDir, "m9-visual-assets.png"), fullPage: true });
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
       { x: 6.4, y: 1.65, z: 8.1 },
       { x: 4.05, y: 2.24, z: 8.1 }
     );
   });
   await page.waitForTimeout(250);
-  await page.screenshot({ path: resolve(logsDir, "m8-1-signage.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m9-signage.png"), fullPage: true });
 
-  const screenshotPath = resolve(logsDir, "m8-1-smoke.png");
+  const screenshotPath = resolve(logsDir, "m9-smoke.png");
   await page.screenshot({ path: screenshotPath, fullPage: true });
 
   await page.keyboard.press("r");
@@ -360,6 +373,39 @@ try {
   if (badSignOrientations.length > 0) {
     throw new Error(`Wall signs must face the intended room-side viewing direction: ${JSON.stringify({ badSignOrientations, decorativeSigns })}`);
   }
+
+  const requiredM9AssetIds = [
+    "m9-office-carpet",
+    "m9-wall-subtle-variation",
+    "m9-ceiling-tile-light-panel",
+    "m9-elevator-checkout-panel",
+    "m9-incident-report-paper",
+    "m9-clarity-abstract-overlay",
+    "m9-policy-poster-hallway",
+    "m9-policy-poster-meeting",
+    "m9-policy-poster-records",
+    "m9-meeting-agenda-card"
+  ];
+  const loadedM9AssetIds = new Set(
+    (initialDebug.generatedAssets ?? [])
+      .filter((asset) => asset.loaded)
+      .map((asset) => asset.assetId)
+  );
+  const missingM9AssetIds = requiredM9AssetIds.filter((assetId) => !loadedM9AssetIds.has(assetId));
+  if (missingM9AssetIds.length > 0) {
+    throw new Error(`M9 generated/procedural asset textures did not load: ${missingM9AssetIds.join(", ")}`);
+  }
+
+  const m9DecorativeAssetIds = new Set(
+    decorativeSigns
+      .filter((sign) => sign.generatedAsset)
+      .map((sign) => sign.assetId)
+  );
+  ["m9-policy-poster-hallway", "m9-policy-poster-meeting", "m9-policy-poster-records", "m9-meeting-agenda-card", "m9-clarity-abstract-overlay"].forEach((assetId) => {
+    if (!m9DecorativeAssetIds.has(assetId)) {
+      throw new Error(`M9 decorative asset was not present in scene sign metadata: ${assetId}`);
+    }
+  });
 
   const requiredReportIds = ["IR-01", "IR-02", "IR-03"];
   const initialReportIds = initialDebug.reportPositions.map((report) => report.id);
@@ -536,12 +582,15 @@ try {
 
   const proof = {
     url: smokeUrl,
-    screenshot: ".logs/m8-1-smoke.png",
-    reportScreenshot: ".logs/m8-1-reports-before.png",
-    meetingScreenshot: ".logs/m8-1-meeting.png",
-    recordsSignageScreenshot: ".logs/m8-1-signage.png",
+    screenshot: ".logs/m9-smoke.png",
+    reportScreenshot: ".logs/m9-reports-before.png",
+    meetingScreenshot: ".logs/m9-meeting.png",
+    visualAssetScreenshot: ".logs/m9-visual-assets.png",
+    recordsSignageScreenshot: ".logs/m9-signage.png",
     recordsSignage: recordsLabel,
     signOrientationChecks,
+    requiredM9AssetIds,
+    loadedM9AssetIds: Array.from(loadedM9AssetIds),
     fullRunVisitedRoomIds,
     initialDebug,
     initialHud,
@@ -564,8 +613,8 @@ try {
     server: `vite createServer API on 127.0.0.1:${smokePort}`
   };
 
-  writeFileSync(resolve(logsDir, "m8-1-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
-  console.log("M8.1 smoke passed. Screenshot: .logs/m8-1-smoke.png");
+  writeFileSync(resolve(logsDir, "m9-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
+  console.log("M9 smoke passed. Screenshot: .logs/m9-smoke.png");
 } finally {
   await server.close();
 }

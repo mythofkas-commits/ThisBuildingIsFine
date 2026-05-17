@@ -314,3 +314,22 @@ Rationale:
 Consequences:
 - Smoke proof checks sign wall offsets, front-facing normals for representative signs, and full M8 run completion.
 - Future wall signs should be created through `createWallSign` unless they have a specific non-wall reason not to.
+
+## D017 - Use Deterministic Procedural Placeholder Textures For M9
+
+Status: Accepted
+
+Context:
+M9 introduces the first controlled visual asset batch, but no approved external AI image API, paid tool, credential, or manual editor workflow is available in the current environment.
+
+Decision:
+Create AI-intended prompt files and generate the first asset batch locally with `scripts/generate-procedural-textures.mjs`. Track every asset as `local_procedural_placeholder` in `asset_manifest.json`, then load them through Babylon materials and decorative wall planes from stable `public/assets/...` paths.
+
+Rationale:
+- Preserves the AI-only workflow without requiring credentials or manual import.
+- Keeps assets deterministic, replaceable, and auditable.
+- Lets M9 prove the asset pipeline before investing in final art.
+
+Consequences:
+- M9 assets are visual prototypes, not final AI-generated outputs.
+- Future M10/M11 polish can replace files under the same IDs if style, readability, and stability contracts remain intact.

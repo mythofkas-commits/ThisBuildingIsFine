@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="704" viewBox="0 0 512 704">
+  <rect width="512" height="704" fill="#eee4c8"/>
+  <rect x="0" y="0" width="512" height="84" fill="#8b7f75"/>
+  <rect x="36" y="122" width="440" height="432" fill="#f7f0da" stroke="#3a3429" stroke-width="8"/>
+  <path d="M64 586H448M64 620H382M64 654H420" stroke="#b9ad87" stroke-width="10" stroke-linecap="square"/>
+  <path d="M82 174H430M82 468H430" stroke="#8b7f75" stroke-width="14"/>
+  <text x="256" y="66" font-family="Arial, sans-serif" font-size="34" fill="#2f2b22" text-anchor="middle" font-weight="700">BUILDING POLICY</text>
+  <text x="256" y="270" font-family="Arial, sans-serif" font-size="46" fill="#2f2b22" text-anchor="middle" font-weight="700">FORMS REMEMBER</text>
+  <text x="256" y="336" font-family="Arial, sans-serif" font-size="42" fill="#2f2b22" text-anchor="middle" font-weight="700">VERSION HISTORY</text>
+  <text x="256" y="410" font-family="Arial, sans-serif" font-size="25" fill="#554d3c" text-anchor="middle">Please initial any memory you disturb.</text>
+  <text x="256" y="676" font-family="Arial, sans-serif" font-size="20" fill="#665d49" text-anchor="middle">Form M9-visual / Retain until replaced</text>
+</svg>

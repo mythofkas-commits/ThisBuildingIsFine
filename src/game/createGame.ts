@@ -65,6 +65,15 @@ interface DebugState {
     wallOffsetApplied?: number;
     facingNormal?: { x: number; y: number; z: number };
     backFaceCulling?: boolean;
+    generatedAsset?: boolean;
+    assetId?: string;
+    texturePath?: string;
+  }>;
+  generatedAssets: Array<{
+    assetId: string;
+    texturePath: string;
+    materialName: string;
+    loaded: boolean;
   }>;
   clarity: {
     value: number;
@@ -327,7 +336,22 @@ function updateDebugState(
           height: mesh.metadata?.height,
           wallOffsetApplied: mesh.metadata?.wallOffsetApplied,
           facingNormal: mesh.metadata?.facingNormal,
-          backFaceCulling: mesh.material?.backFaceCulling
+          backFaceCulling: mesh.material?.backFaceCulling,
+          generatedAsset: mesh.metadata?.generatedAsset,
+          assetId: mesh.metadata?.assetId,
+          texturePath: mesh.metadata?.texturePath
+        };
+      }),
+    generatedAssets: scene.materials
+      .filter((material) => material.metadata?.kind === "m9-generated-asset-material")
+      .map((material) => {
+        const materialWithTexture = material as unknown as { diffuseTexture?: { isReady?: () => boolean } | null };
+        const diffuseTexture = materialWithTexture.diffuseTexture ?? null;
+        return {
+          assetId: material.metadata.assetId,
+          texturePath: material.metadata.texturePath,
+          materialName: material.name,
+          loaded: Boolean(diffuseTexture?.isReady?.())
         };
       }),
     clarity: {
