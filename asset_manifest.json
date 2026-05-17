@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "The Building Is Fine",
-  "status": "m6_performance_review_narrator",
+  "status": "m8_first_complete_5_room_run",
   "rules": {
     "default_asset_strategy": "procedural geometry and generated materials first",
     "generated_assets_begin_milestone": "M9",
@@ -186,6 +186,49 @@
       "replacement_notes": "Future milestones may add more Performance Review triggers or presentation polish without adding voice audio before approval."
     },
     {
+      "id": "m7-the-meeting-hazard",
+      "name": "M7 The Meeting Hazard",
+      "category": "gameplay",
+      "status": "validated",
+      "source_type": "procedural_geometry_source_data",
+      "prompt_ref": ".prompts/office_props.md",
+      "source_path": "src/game/meeting/createMeetingHazard.ts",
+      "game_path": "mesh:meeting-hazard-root, mesh:meeting-chair-01-seat, mesh:meeting-side-table-top, mesh:meeting-agenda-panel",
+      "format": "runtime Babylon.js procedural meshes with TypeScript zone, state, and update rules",
+      "scale_notes": "Conference-room hazard using human-scale chairs, a small table, and an agenda panel that rearrange into a partial office-object pressure shape while leaving escape paths.",
+      "style_notes": "Calm corporate-surreal meeting furniture and agenda signage; no creature, enemy, gore, jump scare, or dark horror presentation.",
+      "validation": {
+        "status": "validated",
+        "proof": [".logs/m7-smoke.json", ".logs/m7-meeting.png", ".logs/m7-smoke.png"]
+      },
+      "replacement_notes": "Future milestones may expand Meeting variants or object layouts while preserving source-defined trigger, escape, and non-enemy behavior."
+    },
+    {
+      "id": "m8-complete-run-wayfinding",
+      "name": "M8 Complete Run Wayfinding",
+      "category": "environment",
+      "status": "validated",
+      "source_type": "procedural_geometry_dynamic_texture_source_data",
+      "prompt_ref": ".prompts/environment_assets.md",
+      "source_path": "src/game/rooms/createRoom.ts",
+      "game_path": "mesh:m8-wayfinding-lobby, mesh:m8-wayfinding-cubicles, mesh:m8-wayfinding-conference, mesh:m8-wayfinding-records, mesh:m8-wayfinding-elevator",
+      "format": "runtime Babylon.js wall signs with DynamicTexture text",
+      "scale_notes": "Small non-collidable wayfinding signs placed in each approved room to support the first complete five-room run without heavy tutorialization.",
+      "style_notes": "Restrained office signage using File Audit and Complete Check-Out language; no external assets or M9 visual pipeline.",
+      "validation": {
+        "status": "validated",
+        "proof": [
+          ".logs/m8-smoke.json",
+          ".logs/m8-smoke.png",
+          ".logs/m8-records-signage.png",
+          ".logs/m8-1-smoke.json",
+          ".logs/m8-1-smoke.png",
+          ".logs/m8-1-signage.png"
+        ]
+      },
+      "replacement_notes": "Future polish may replace or restyle signs while preserving readable five-room run guidance."
+    },
+    {
       "id": "m1-dom-hud",
       "name": "M1 DOM HUD Placeholder",
       "category": "interface",
@@ -235,7 +278,22 @@
       ".logs/m6-smoke.json",
       ".logs/m6-smoke.png",
       ".logs/m6-reports-before.png",
-      ".logs/m6-records-signage.png"
+      ".logs/m6-records-signage.png",
+      ".logs/m7-smoke.json",
+      ".logs/m7-smoke.png",
+      ".logs/m7-reports-before.png",
+      ".logs/m7-meeting.png",
+      ".logs/m7-records-signage.png",
+      ".logs/m8-smoke.json",
+      ".logs/m8-smoke.png",
+      ".logs/m8-reports-before.png",
+      ".logs/m8-meeting.png",
+      ".logs/m8-records-signage.png",
+      ".logs/m8-1-smoke.json",
+      ".logs/m8-1-smoke.png",
+      ".logs/m8-1-reports-before.png",
+      ".logs/m8-1-meeting.png",
+      ".logs/m8-1-signage.png"
     ]
   }
 }

@@ -72,13 +72,15 @@ try {
   await page.goto(smokeUrl, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.__TBIF_DEBUG__?.ready === true);
   await page.waitForTimeout(500);
-  await page.screenshot({ path: resolve(logsDir, "m6-reports-before.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m8-1-reports-before.png"), fullPage: true });
 
   const initialDebug = await page.evaluate(() => window.__TBIF_DEBUG__);
   const initialHud = await page.evaluate(() => ({
     hasHud: Boolean(document.querySelector(".hud")),
     reportText: document.querySelector("[data-hud-report]")?.textContent ?? "",
     clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    meetingText: document.querySelector("[data-hud-meeting]")?.textContent ?? "",
+    checkOutText: document.querySelector("[data-hud-extraction]")?.textContent ?? "",
     narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? "",
     statusText: document.querySelector("[data-hud-status]")?.textContent ?? ""
   }));
@@ -100,7 +102,51 @@ try {
   await page.keyboard.down("d");
   await page.waitForTimeout(1900);
   await page.keyboard.up("d");
-  const afterRoomTraversal = await page.evaluate(() => window.__TBIF_DEBUG__?.cameraPosition);
+  const afterRoomTraversal = await page.evaluate(() => window.__TBIF_DEBUG__);
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 15.8, y: 1.65, z: -2.6 },
+      { x: 16.2, y: 1.55, z: -0.4 }
+    );
+  });
+  await page.waitForTimeout(2600);
+  await page.screenshot({ path: resolve(logsDir, "m8-1-meeting.png"), fullPage: true });
+  const meetingActive = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    meetingText: document.querySelector("[data-hud-meeting]")?.textContent ?? "",
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? ""
+  }));
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 11.25, y: 1.65, z: 0 },
+      { x: 8.6, y: 1.55, z: 0 }
+    );
+  });
+  await page.waitForTimeout(850);
+  const meetingEscaped = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    meetingText: document.querySelector("[data-hud-meeting]")?.textContent ?? "",
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? ""
+  }));
+
+  await page.evaluate(() => {
+    window.__TBIF_PROOF_CAMERA__?.(
+      { x: 8.0, y: 1.65, z: 8.0 },
+      { x: 8.8, y: 1.55, z: 8.0 }
+    );
+  });
+  await page.waitForTimeout(350);
+  const recordsReview = await page.evaluate(() => ({
+    debug: window.__TBIF_DEBUG__,
+    statusText: document.querySelector("[data-hud-status]")?.textContent ?? "",
+    clarityText: document.querySelector("[data-hud-clarity]")?.textContent ?? "",
+    narratorText: document.querySelector("[data-hud-narrator]")?.textContent ?? ""
+  }));
 
   await page.evaluate(() => {
     window.__TBIF_PROOF_CAMERA__?.(
@@ -173,9 +219,9 @@ try {
     );
   });
   await page.waitForTimeout(250);
-  await page.screenshot({ path: resolve(logsDir, "m6-records-signage.png"), fullPage: true });
+  await page.screenshot({ path: resolve(logsDir, "m8-1-signage.png"), fullPage: true });
 
-  const screenshotPath = resolve(logsDir, "m6-smoke.png");
+  const screenshotPath = resolve(logsDir, "m8-1-smoke.png");
   await page.screenshot({ path: screenshotPath, fullPage: true });
 
   await page.keyboard.press("r");
@@ -191,7 +237,19 @@ try {
   const traversed =
     afterMove &&
     afterRoomTraversal &&
-    Math.hypot(afterRoomTraversal.x - afterMove.x, afterRoomTraversal.z - afterMove.z) > 1;
+    Math.hypot(afterRoomTraversal.cameraPosition.x - afterMove.x, afterRoomTraversal.cameraPosition.z - afterMove.z) > 1;
+  const fullRunVisitedRoomIds = Array.from(new Set([
+    initialDebug?.currentRoomId,
+    afterCollection.debug?.currentRoomId,
+    afterRoomTraversal?.currentRoomId,
+    meetingActive.debug?.currentRoomId,
+    meetingEscaped.debug?.currentRoomId,
+    recordsReview.debug?.currentRoomId,
+    lockedExtraction.debug?.currentRoomId,
+    afterSecondReport?.currentRoomId,
+    afterAllReports.debug?.currentRoomId,
+    afterInteractionWin.debug?.currentRoomId
+  ].filter(Boolean)));
 
   if (!moved) {
     throw new Error("Smoke test did not observe first-person movement.");
@@ -227,6 +285,16 @@ try {
 
   if (!initialDebug.extraction || initialDebug.extraction.id !== "elevator-extraction") {
     throw new Error(`Smoke test did not observe source-defined extraction zone: ${JSON.stringify(initialDebug)}`);
+  }
+
+  if (
+    !initialDebug.meeting ||
+    initialDebug.meeting.id !== "the-meeting" ||
+    initialDebug.meeting.roomId !== "conference" ||
+    initialDebug.meeting.objectPositions.length < 6 ||
+    initialDebug.dynamicCollisionBlockerCount < 1
+  ) {
+    throw new Error(`Smoke test did not observe source-driven M7 Meeting hazard setup: ${JSON.stringify(initialDebug)}`);
   }
 
   const requiredRoomIds = ["lobby", "cubicles", "conference", "records", "elevator"];
@@ -271,6 +339,28 @@ try {
     throw new Error(`Records prop sign is still low or doorway-mounted: ${JSON.stringify(recordsLabel)}`);
   }
 
+  const decorativeSigns = afterRestart.decorativeSigns ?? [];
+  const signsWithoutWallOffset = decorativeSigns.filter((sign) => (sign.wallOffsetApplied ?? 0) < 0.035);
+  const signsWithBackfaceText = decorativeSigns.filter((sign) => sign.backFaceCulling !== true);
+  if (signsWithoutWallOffset.length > 0 || signsWithBackfaceText.length > 0) {
+    throw new Error(`Wall signs must be offset from walls and render only their readable front face: ${JSON.stringify({ signsWithoutWallOffset, signsWithBackfaceText })}`);
+  }
+
+  const signOrientationChecks = [
+    { name: "m8-wayfinding-conference", axis: "x", direction: -1 },
+    { name: "m8-wayfinding-records", axis: "x", direction: 1 },
+    { name: "m8-wayfinding-elevator", axis: "z", direction: -1 },
+    { name: "m8-wayfinding-lobby", axis: "z", direction: 1 }
+  ];
+  const badSignOrientations = signOrientationChecks.filter((check) => {
+    const sign = decorativeSigns.find((candidate) => candidate.name === check.name);
+    const axisValue = check.axis === "x" ? sign?.facingNormal?.x : sign?.facingNormal?.z;
+    return !sign || axisValue === undefined || axisValue * check.direction < 0.9;
+  });
+  if (badSignOrientations.length > 0) {
+    throw new Error(`Wall signs must face the intended room-side viewing direction: ${JSON.stringify({ badSignOrientations, decorativeSigns })}`);
+  }
+
   const requiredReportIds = ["IR-01", "IR-02", "IR-03"];
   const initialReportIds = initialDebug.reportPositions.map((report) => report.id);
   const missingReportIds = requiredReportIds.filter((reportId) => !initialReportIds.includes(reportId));
@@ -307,6 +397,48 @@ try {
     throw new Error(`Smoke test did not observe narrator report/Clarity reaction: ${JSON.stringify(afterCollection)}`);
   }
 
+  const initialMeetingObjectsById = new Map(
+    initialDebug.meeting.objectPositions.map((object) => [object.id, object])
+  );
+  const meetingObjectMoved = meetingActive.debug?.meeting.objectPositions.some((object) => {
+    const initialObject = initialMeetingObjectsById.get(object.id);
+    return initialObject && Math.hypot(object.x - initialObject.x, object.z - initialObject.z) > 0.45;
+  });
+
+  if (
+    !meetingActive.debug ||
+    !meetingActive.debug.meeting.insideZone ||
+    !["assembling", "active"].includes(meetingActive.debug.meeting.phase) ||
+    meetingActive.debug.meeting.activationCount < 1 ||
+    !meetingObjectMoved ||
+    !meetingActive.meetingText.includes("The Meeting") ||
+    !meetingActive.debug.clarity.appliedEventIds.includes("meeting-exposure") ||
+    !meetingActive.debug.narrator.history.some((entry) => entry.eventId === "meeting-noticed") ||
+    !meetingActive.debug.narrator.history.some((entry) => entry.eventId === "meeting-reminder")
+  ) {
+    throw new Error(`Smoke test did not observe active M7 Meeting behavior: ${JSON.stringify(meetingActive)}`);
+  }
+
+  if (
+    !meetingEscaped.debug ||
+    meetingEscaped.debug.meeting.insideZone ||
+    meetingEscaped.debug.meeting.escapeCount < 1 ||
+    !["cooling", "idle"].includes(meetingEscaped.debug.meeting.phase) ||
+    !meetingEscaped.debug.narrator.history.some((entry) => entry.eventId === "meeting-escaped") ||
+    !meetingEscaped.statusText.includes("failed to reach you")
+  ) {
+    throw new Error(`Smoke test did not observe Meeting escape behavior: ${JSON.stringify(meetingEscaped)}`);
+  }
+
+  if (
+    !recordsReview.debug ||
+    recordsReview.debug.currentRoomId !== "records" ||
+    !recordsReview.debug.clarity.appliedEventIds.includes("records-room-entry") ||
+    recordsReview.narratorText.length < 12
+  ) {
+    throw new Error(`Smoke test did not observe records room integration in full M8 path: ${JSON.stringify(recordsReview)}`);
+  }
+
   if (
     !lockedExtraction.debug ||
     lockedExtraction.debug.extraction.available ||
@@ -316,6 +448,12 @@ try {
     !lockedExtraction.debug.clarity.appliedEventIds.includes("locked-extraction-approach")
   ) {
     throw new Error(`Smoke test did not observe locked extraction feedback: ${JSON.stringify(lockedExtraction)}`);
+  }
+
+  const expectedFullRunRoomIds = ["lobby", "cubicles", "conference", "records", "elevator"];
+  const missingFullRunRoomIds = expectedFullRunRoomIds.filter((roomId) => !fullRunVisitedRoomIds.includes(roomId));
+  if (missingFullRunRoomIds.length > 0) {
+    throw new Error(`Smoke test did not observe the complete five-room M8 path. Missing: ${missingFullRunRoomIds.join(", ")}; visited: ${fullRunVisitedRoomIds.join(", ")}`);
   }
 
   const lockedNarratorCount = lockedExtraction.debug.narrator.history
@@ -338,8 +476,8 @@ try {
     afterAllReports.debug.collectedReportCount < 3 ||
     !afterAllReports.debug.extraction.available ||
     afterAllReports.debug.extraction.completed ||
-    !afterAllReports.statusText.includes("Extraction approved") ||
-    !afterAllReports.extractionText.includes("Proceed to elevator") ||
+    !afterAllReports.statusText.includes("File Audit approved") ||
+    !afterAllReports.extractionText.includes("Proceed to Complete Check-Out") ||
     afterAllReports.debug.clarity.value >= initialDebug.clarity.value
   ) {
     throw new Error(`Smoke test did not observe extraction availability after all reports: ${JSON.stringify(afterAllReports)}`);
@@ -398,13 +536,19 @@ try {
 
   const proof = {
     url: smokeUrl,
-    screenshot: ".logs/m6-smoke.png",
-    reportScreenshot: ".logs/m6-reports-before.png",
-    recordsSignageScreenshot: ".logs/m6-records-signage.png",
+    screenshot: ".logs/m8-1-smoke.png",
+    reportScreenshot: ".logs/m8-1-reports-before.png",
+    meetingScreenshot: ".logs/m8-1-meeting.png",
+    recordsSignageScreenshot: ".logs/m8-1-signage.png",
     recordsSignage: recordsLabel,
+    signOrientationChecks,
+    fullRunVisitedRoomIds,
     initialDebug,
     initialHud,
     afterCollection,
+    meetingActive,
+    meetingEscaped,
+    recordsReview,
     lockedExtraction,
     afterSecondReport,
     afterAllReports,
@@ -413,15 +557,15 @@ try {
     debug: afterRestart,
     movementObserved: moved,
     traversalObserved: traversed,
-    traversalPosition: afterRoomTraversal,
+    traversalPosition: afterRoomTraversal?.cameraPosition,
     connectedRoomTraversalObserved: true,
     consoleMessages,
     pageErrors,
     server: `vite createServer API on 127.0.0.1:${smokePort}`
   };
 
-  writeFileSync(resolve(logsDir, "m6-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
-  console.log("M6 smoke passed. Screenshot: .logs/m6-smoke.png");
+  writeFileSync(resolve(logsDir, "m8-1-smoke.json"), `${JSON.stringify(proof, null, 2)}\n`);
+  console.log("M8.1 smoke passed. Screenshot: .logs/m8-1-smoke.png");
 } finally {
   await server.close();
 }

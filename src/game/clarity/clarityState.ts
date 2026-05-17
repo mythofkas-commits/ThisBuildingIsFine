@@ -26,6 +26,12 @@ export const clarityEvents: Record<ClarityEventId, ClarityEventDefinition> = {
     delta: -2,
     once: true,
     message: "Your orientation is under informal review."
+  },
+  "meeting-exposure": {
+    id: "meeting-exposure",
+    delta: -3,
+    once: true,
+    message: "The agenda has revised your clarity by a small and unnecessary amount."
   }
 };
 

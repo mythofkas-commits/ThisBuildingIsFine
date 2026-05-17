@@ -15,7 +15,10 @@ interface WallSignOptions {
   width?: number;
   height?: number;
   fontSize?: number;
+  wallOffset?: number;
 }
+
+const DEFAULT_WALL_SIGN_OFFSET = 0.045;
 
 export function createBox(
   scene: Scene,
@@ -64,13 +67,21 @@ export function createWallSign(
   const width = options.width ?? 1.85;
   const height = options.height ?? 0.46;
   const fontSize = options.fontSize ?? 26;
+  const wallOffset = options.wallOffset ?? DEFAULT_WALL_SIGN_OFFSET;
+  const facingNormal = getFacingNormal(rotationY);
   const sign = MeshBuilder.CreatePlane(name, { width, height }, scene);
-  sign.position = position;
+  sign.position = position.add(facingNormal.scale(wallOffset));
   sign.rotation.y = rotationY;
   sign.checkCollisions = false;
   sign.metadata = {
     kind: "decorative-sign",
     collision: "intentionally-non-collidable",
+    wallOffsetApplied: wallOffset,
+    facingNormal: {
+      x: facingNormal.x,
+      y: facingNormal.y,
+      z: facingNormal.z
+    },
     width,
     height
   };
@@ -82,9 +93,21 @@ export function createWallSign(
     height: 180,
     fontSize
   });
-  sign.material.backFaceCulling = false;
+  sign.material.backFaceCulling = true;
   sign.parent = parent;
   return sign;
+}
+
+export function getWallSignFacingNormal(rotationY: number): Vector3 {
+  return getFacingNormal(rotationY);
+}
+
+export function getDefaultWallSignOffset(): number {
+  return DEFAULT_WALL_SIGN_OFFSET;
+}
+
+function getFacingNormal(rotationY: number): Vector3 {
+  return new Vector3(Math.sin(rotationY), 0, Math.cos(rotationY)).normalize();
 }
 
 export function createIncidentReport(

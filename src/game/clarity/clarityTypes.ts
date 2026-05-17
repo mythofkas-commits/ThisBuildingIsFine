@@ -2,7 +2,8 @@ export type ClarityEventId =
   | "incident-report-filed"
   | "locked-extraction-approach"
   | "records-room-entry"
-  | "elevator-room-entry";
+  | "elevator-room-entry"
+  | "meeting-exposure";
 
 export type ClarityBand = "baseline" | "reviewed" | "revised" | "misfiled";
 

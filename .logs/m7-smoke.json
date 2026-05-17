@@ -1,0 +1,3007 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "screenshot": ".logs/m7-smoke.png",
+  "reportScreenshot": ".logs/m7-reports-before.png",
+  "meetingScreenshot": ".logs/m7-meeting.png",
+  "recordsSignageScreenshot": ".logs/m7-records-signage.png",
+  "recordsSignage": {
+    "label": {
+      "name": "records-label",
+      "x": 4.079999923706055,
+      "y": 2.2799999713897705,
+      "z": 8,
+      "width": 1.75,
+      "height": 0.44
+    },
+    "recordsSign": {
+      "name": "records-sign",
+      "x": 8,
+      "y": 2.3399999141693115,
+      "z": 11.779999732971191,
+      "width": 1.55,
+      "height": 0.42
+    }
+  },
+  "initialDebug": {
+    "ready": true,
+    "meshCount": 134,
+    "roomCount": 5,
+    "roomIds": [
+      "lobby",
+      "cubicles",
+      "conference",
+      "records",
+      "elevator"
+    ],
+    "connectionCount": 5,
+    "collisionBlockerCount": 84,
+    "dynamicCollisionBlockerCount": 12,
+    "wallCollisionProbeBlocked": true,
+    "doorwayProbeClearCount": 5,
+    "decorativeSignCount": 14,
+    "hasHud": true,
+    "reportTotal": 3,
+    "collectedReportCount": 0,
+    "collectedReportIds": [],
+    "uncollectedReportIds": [
+      "IR-01",
+      "IR-02",
+      "IR-03"
+    ],
+    "reportPositions": [
+      {
+        "id": "IR-01",
+        "roomId": "lobby",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645,
+        "visible": true
+      },
+      {
+        "id": "IR-02",
+        "roomId": "cubicles",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929,
+        "visible": true
+      },
+      {
+        "id": "IR-03",
+        "roomId": "elevator",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863,
+        "visible": true
+      }
+    ],
+    "extraction": {
+      "id": "elevator-extraction",
+      "roomId": "elevator",
+      "label": "Extraction Elevator",
+      "available": false,
+      "completed": false,
+      "requiredReportCount": 3,
+      "distance": 20.193622755711765,
+      "near": false
+    },
+    "decorativeSigns": [
+      {
+        "name": "lobby-label",
+        "x": 0,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "lobby-check-in-plaque",
+        "x": -1.2000000476837158,
+        "y": 0.9599999785423279,
+        "z": -0.8700000047683716
+      },
+      {
+        "name": "cubicles-label",
+        "x": 8,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-screen",
+        "x": 16,
+        "y": 2.200000047683716,
+        "z": 3.9100000858306885,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "records-label",
+        "x": 4.079999923706055,
+        "y": 2.2799999713897705,
+        "z": 8,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "records-sign",
+        "x": 8,
+        "y": 2.3399999141693115,
+        "z": 11.779999732971191,
+        "width": 1.55,
+        "height": 0.42
+      },
+      {
+        "name": "elevator-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": 11.920000076293945,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "sign-exit-request-pending",
+        "x": 16,
+        "y": 2.7200000286102295,
+        "z": 11.640000343322754,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "incident-report-ir-01",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645
+      },
+      {
+        "name": "incident-report-ir-02",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929
+      },
+      {
+        "name": "incident-report-ir-03",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863
+      },
+      {
+        "name": "extraction-zone-marker",
+        "x": 16,
+        "y": 0.03500000014901161,
+        "z": 9.720000267028809
+      },
+      {
+        "name": "extraction-status-sign",
+        "x": 16,
+        "y": 2.240000009536743,
+        "z": 11.4399995803833,
+        "width": 1.55,
+        "height": 0.42
+      }
+    ],
+    "clarity": {
+      "value": 100,
+      "baseline": 100,
+      "band": "baseline",
+      "lastEventId": null,
+      "lastMessage": "Clarity restored to company baseline.",
+      "appliedEventIds": []
+    },
+    "narrator": {
+      "currentMessage": "Performance review pending.",
+      "currentEventId": "performance-review-pending",
+      "emissionCount": 1,
+      "blockedCount": 0,
+      "history": [
+        {
+          "eventId": "performance-review-pending",
+          "message": "Performance review pending.",
+          "frame": 0
+        }
+      ]
+    },
+    "meeting": {
+      "id": "the-meeting",
+      "roomId": "conference",
+      "phase": "idle",
+      "insideZone": false,
+      "exposureFrames": 0,
+      "activationCount": 0,
+      "escapeCount": 0,
+      "clarityApplied": false,
+      "objectPositions": [
+        {
+          "id": "meeting-chair-01",
+          "x": 19.100000381469727,
+          "z": -2.75,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-02",
+          "x": 19.100000381469727,
+          "z": -1.5499999523162842,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-03",
+          "x": 19.100000381469727,
+          "z": 1.5499999523162842,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-04",
+          "x": 19.100000381469727,
+          "z": 2.75,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-05",
+          "x": 13.600000381469727,
+          "z": -3.049999952316284,
+          "rotationY": 0
+        },
+        {
+          "id": "meeting-side-table",
+          "x": 15,
+          "z": -3.119999885559082,
+          "rotationY": 0
+        },
+        {
+          "id": "meeting-agenda",
+          "x": 16.549999237060547,
+          "z": -3.1600000858306885,
+          "rotationY": 0
+        }
+      ]
+    },
+    "nearestReportId": "IR-01",
+    "restartCount": 0,
+    "cameraPosition": {
+      "x": 0,
+      "y": 1.65,
+      "z": -2.6
+    },
+    "lastStatus": "Evidence audit pending. Incident Reports may be filed by proximity."
+  },
+  "initialHud": {
+    "hasHud": true,
+    "reportText": "Incident Reports: 0 / 3. Incident Report 01: pending",
+    "clarityText": "Clarity: 100%. company baseline",
+    "narratorText": "Performance review pending.",
+    "statusText": "Evidence audit pending. Incident Reports may be filed by proximity."
+  },
+  "afterCollection": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 1,
+      "collectedReportIds": [
+        "IR-01"
+      ],
+      "uncollectedReportIds": [
+        "IR-02",
+        "IR-03"
+      ],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": true
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": true
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": false,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 19.42795019676665,
+        "near": false
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 96,
+        "baseline": 100,
+        "band": "baseline",
+        "lastEventId": "incident-report-filed",
+        "lastMessage": "Clarity variance detected. Please remain conceptually available.",
+        "appliedEventIds": [
+          "incident-report-filed"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "Clarity variance detected. Please remain conceptually available.",
+        "currentEventId": "clarity-changed",
+        "emissionCount": 3,
+        "blockedCount": 0,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "idle",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 0,
+        "escapeCount": 0,
+        "clarityApplied": false,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.100000381469727,
+            "z": -2.75,
+            "rotationY": -1.5707963267948966
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.100000381469727,
+            "z": -1.5499999523162842,
+            "rotationY": -1.5707963267948966
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.100000381469727,
+            "z": 1.5499999523162842,
+            "rotationY": -1.5707963267948966
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.100000381469727,
+            "z": 2.75,
+            "rotationY": -1.5707963267948966
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.600000381469727,
+            "z": -3.049999952316284,
+            "rotationY": 0
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15,
+            "z": -3.119999885559082,
+            "rotationY": 0
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.549999237060547,
+            "z": -3.1600000858306885,
+            "rotationY": 0
+          }
+        ]
+      },
+      "nearestReportId": "IR-02",
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 0,
+        "y": 1.65,
+        "z": -1.3002199999839064
+      },
+      "lastStatus": "Incident Report 01 filed. The hallway expressed discomfort with its assigned direction. Clarity variance detected. Please remain conceptually available."
+    },
+    "hudText": "Incident Reports: 1 / 3. Incident Report 02: pending",
+    "clarityText": "Clarity: 96%. company baseline",
+    "narratorText": "Clarity variance detected. Please remain conceptually available.",
+    "statusText": "Incident Report 01 filed. The hallway expressed discomfort with its assigned direction. Clarity variance detected. Please remain conceptually available."
+  },
+  "meetingActive": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 1,
+      "collectedReportIds": [
+        "IR-01"
+      ],
+      "uncollectedReportIds": [
+        "IR-02",
+        "IR-03"
+      ],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": true
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": true
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": false,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 12.32162326968326,
+        "near": false
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 93,
+        "baseline": 100,
+        "band": "reviewed",
+        "lastEventId": "meeting-exposure",
+        "lastMessage": "The agenda has revised your clarity by a small and unnecessary amount.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "Your orientation is under informal review.",
+        "currentEventId": "clarity-changed",
+        "emissionCount": 6,
+        "blockedCount": 0,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "active",
+        "insideZone": true,
+        "exposureFrames": 157,
+        "activationCount": 1,
+        "escapeCount": 0,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 14.350004196166992,
+            "z": -1.9500006437301636,
+            "rotationY": 0.779999973365408
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 15.650003433227539,
+            "z": -2.4999992847442627,
+            "rotationY": 0.17999998016342583
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 17.250001907348633,
+            "z": -2.349996566772461,
+            "rotationY": -0.1800000157577635
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 18.400001525878906,
+            "z": -1.1999965906143188,
+            "rotationY": -0.9000000076001422
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 18.499996185302734,
+            "z": 0.7499966621398926,
+            "rotationY": -1.4799999832315562
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 17.799997329711914,
+            "z": 1.949995517730713,
+            "rotationY": -1.1999999864039648
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 15.250000953674316,
+            "z": 1.949995517730713,
+            "rotationY": 0.4199999952413875
+          }
+        ]
+      },
+      "nearestReportId": "IR-02",
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 15.8,
+        "y": 1.65,
+        "z": -2.6
+      },
+      "lastStatus": "Your attendance has been inferred. Leaving early may improve your clarity. The agenda has revised your clarity by a small and unnecessary amount."
+    },
+    "meetingText": "The Meeting: active. leave the agenda to decline",
+    "statusText": "Your attendance has been inferred. Leaving early may improve your clarity. The agenda has revised your clarity by a small and unnecessary amount.",
+    "clarityText": "Clarity: 93%. under informal review",
+    "narratorText": "Your orientation is under informal review."
+  },
+  "meetingEscaped": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 1,
+      "collectedReportIds": [
+        "IR-01"
+      ],
+      "uncollectedReportIds": [
+        "IR-02",
+        "IR-03"
+      ],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": true
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": true
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": false,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 10.817645815980484,
+        "near": false
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 93,
+        "baseline": 100,
+        "band": "reviewed",
+        "lastEventId": "meeting-exposure",
+        "lastMessage": "The agenda has revised your clarity by a small and unnecessary amount.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "The meeting has failed to reach you.",
+        "currentEventId": "meeting-escaped",
+        "emissionCount": 7,
+        "blockedCount": 0,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          },
+          {
+            "eventId": "meeting-escaped",
+            "message": "The meeting has failed to reach you.",
+            "frame": 335
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "cooling",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 1,
+        "escapeCount": 1,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.038860321044922,
+            "z": -2.7397027015686035,
+            "rotationY": -1.5630101309247835
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.055593490600586,
+            "z": -1.5622280836105347,
+            "rotationY": -1.5649974224092982
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.076187133789062,
+            "z": 1.499800682067871,
+            "rotationY": -1.566189797300007
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.09099006652832,
+            "z": 2.6991569995880127,
+            "rotationY": -1.5685745470814243
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.663070678710938,
+            "z": -3.0010879039764404,
+            "rotationY": -0.004901985661802778
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15.036040306091309,
+            "z": -3.0547409057617188,
+            "rotationY": -0.003974582969029277
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.533266067504883,
+            "z": -3.094226121902466,
+            "rotationY": 0.0013911040391602477
+          }
+        ]
+      },
+      "nearestReportId": "IR-02",
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 11.25,
+        "y": 1.65,
+        "z": 0.001
+      },
+      "lastStatus": "The meeting has failed to reach you."
+    },
+    "meetingText": "The Meeting: cooling. minutes are being corrected",
+    "statusText": "The meeting has failed to reach you.",
+    "narratorText": "The meeting has failed to reach you."
+  },
+  "lockedExtraction": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 1,
+      "collectedReportIds": [
+        "IR-01"
+      ],
+      "uncollectedReportIds": [
+        "IR-02",
+        "IR-03"
+      ],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": true
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": true
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": false,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 0,
+        "near": true
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 88,
+        "baseline": 100,
+        "band": "reviewed",
+        "lastEventId": "locked-extraction-approach",
+        "lastMessage": "The building has revised your confidence downward.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure",
+          "elevator-room-entry",
+          "locked-extraction-approach"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "Your exit request has been received and emotionally misunderstood.",
+        "currentEventId": "locked-extraction",
+        "emissionCount": 10,
+        "blockedCount": 14,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          },
+          {
+            "eventId": "meeting-escaped",
+            "message": "The meeting has failed to reach you.",
+            "frame": 335
+          },
+          {
+            "eventId": "elevator-room-entered",
+            "message": "The elevator is experiencing a brief disagreement with verticality.",
+            "frame": 384
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 384
+          },
+          {
+            "eventId": "locked-extraction",
+            "message": "Your exit request has been received and emotionally misunderstood.",
+            "frame": 388
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "cooling",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 1,
+        "escapeCount": 1,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.08386993408203,
+            "z": -2.7472832202911377,
+            "rotationY": -1.569440589871043
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.08828353881836,
+            "z": -1.553226113319397,
+            "rotationY": -1.5697866182126052
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.093717575073242,
+            "z": 1.536756157875061,
+            "rotationY": -1.5699942352175429
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.097623825073242,
+            "z": 2.736586332321167,
+            "rotationY": -1.570409469227418
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.616640090942383,
+            "z": -3.037095785140991,
+            "rotationY": -0.0008535365758543335
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15.00950813293457,
+            "z": -3.102782964706421,
+            "rotationY": -0.0006920566831251348
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.54558563232422,
+            "z": -3.1426472663879395,
+            "rotationY": 0.00024221983909379735
+          }
+        ]
+      },
+      "nearestReportId": "IR-03",
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 16,
+        "y": 1.65,
+        "z": 9.72
+      },
+      "lastStatus": "Extraction unavailable. The elevator is waiting for adequate paperwork."
+    },
+    "statusText": "Extraction unavailable. The elevator is waiting for adequate paperwork.",
+    "clarityText": "Clarity: 88%. under informal review",
+    "narratorText": "Your exit request has been received and emotionally misunderstood.",
+    "extractionText": "Extraction Elevator: locked. Reports still required."
+  },
+  "afterSecondReport": {
+    "ready": true,
+    "meshCount": 134,
+    "roomCount": 5,
+    "roomIds": [
+      "lobby",
+      "cubicles",
+      "conference",
+      "records",
+      "elevator"
+    ],
+    "connectionCount": 5,
+    "collisionBlockerCount": 84,
+    "dynamicCollisionBlockerCount": 12,
+    "wallCollisionProbeBlocked": true,
+    "doorwayProbeClearCount": 5,
+    "decorativeSignCount": 14,
+    "hasHud": true,
+    "reportTotal": 3,
+    "collectedReportCount": 2,
+    "collectedReportIds": [
+      "IR-01",
+      "IR-02"
+    ],
+    "uncollectedReportIds": [
+      "IR-03"
+    ],
+    "reportPositions": [
+      {
+        "id": "IR-01",
+        "roomId": "lobby",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645,
+        "visible": false
+      },
+      {
+        "id": "IR-02",
+        "roomId": "cubicles",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929,
+        "visible": false
+      },
+      {
+        "id": "IR-03",
+        "roomId": "elevator",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863,
+        "visible": true
+      }
+    ],
+    "extraction": {
+      "id": "elevator-extraction",
+      "roomId": "elevator",
+      "label": "Extraction Elevator",
+      "available": false,
+      "completed": false,
+      "requiredReportCount": 3,
+      "distance": 11.066566766617369,
+      "near": false
+    },
+    "decorativeSigns": [
+      {
+        "name": "lobby-label",
+        "x": 0,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "lobby-check-in-plaque",
+        "x": -1.2000000476837158,
+        "y": 0.9599999785423279,
+        "z": -0.8700000047683716
+      },
+      {
+        "name": "cubicles-label",
+        "x": 8,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-screen",
+        "x": 16,
+        "y": 2.200000047683716,
+        "z": 3.9100000858306885,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "records-label",
+        "x": 4.079999923706055,
+        "y": 2.2799999713897705,
+        "z": 8,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "records-sign",
+        "x": 8,
+        "y": 2.3399999141693115,
+        "z": 11.779999732971191,
+        "width": 1.55,
+        "height": 0.42
+      },
+      {
+        "name": "elevator-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": 11.920000076293945,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "sign-exit-request-pending",
+        "x": 16,
+        "y": 2.7200000286102295,
+        "z": 11.640000343322754,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "incident-report-ir-01",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645
+      },
+      {
+        "name": "incident-report-ir-02",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929
+      },
+      {
+        "name": "incident-report-ir-03",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863
+      },
+      {
+        "name": "extraction-zone-marker",
+        "x": 16,
+        "y": 0.03500000014901161,
+        "z": 9.720000267028809
+      },
+      {
+        "name": "extraction-status-sign",
+        "x": 16,
+        "y": 2.240000009536743,
+        "z": 11.4399995803833,
+        "width": 1.55,
+        "height": 0.42
+      }
+    ],
+    "clarity": {
+      "value": 84,
+      "baseline": 100,
+      "band": "revised",
+      "lastEventId": "incident-report-filed",
+      "lastMessage": "Clarity variance detected. Please remain conceptually available.",
+      "appliedEventIds": [
+        "incident-report-filed",
+        "meeting-exposure",
+        "elevator-room-entry",
+        "locked-extraction-approach"
+      ]
+    },
+    "narrator": {
+      "currentMessage": "Your orientation is under informal review.",
+      "currentEventId": "clarity-changed",
+      "emissionCount": 12,
+      "blockedCount": 15,
+      "history": [
+        {
+          "eventId": "performance-review-pending",
+          "message": "Performance review pending.",
+          "frame": 0
+        },
+        {
+          "eventId": "report-collected",
+          "message": "You have collected evidence. Evidence has collected you back.",
+          "frame": 24
+        },
+        {
+          "eventId": "clarity-changed",
+          "message": "Clarity variance detected. Please remain conceptually available.",
+          "frame": 24
+        },
+        {
+          "eventId": "meeting-noticed",
+          "message": "Your attendance has been inferred.",
+          "frame": 177
+        },
+        {
+          "eventId": "meeting-reminder",
+          "message": "The chairs are aligning around a shared misunderstanding.",
+          "frame": 296
+        },
+        {
+          "eventId": "clarity-changed",
+          "message": "Your orientation is under informal review.",
+          "frame": 296
+        },
+        {
+          "eventId": "meeting-escaped",
+          "message": "The meeting has failed to reach you.",
+          "frame": 335
+        },
+        {
+          "eventId": "elevator-room-entered",
+          "message": "The elevator is experiencing a brief disagreement with verticality.",
+          "frame": 384
+        },
+        {
+          "eventId": "clarity-changed",
+          "message": "Clarity variance detected. Please remain conceptually available.",
+          "frame": 384
+        },
+        {
+          "eventId": "locked-extraction",
+          "message": "Your exit request has been received and emotionally misunderstood.",
+          "frame": 388
+        },
+        {
+          "eventId": "report-collected",
+          "message": "Your paperwork has developed confidence.",
+          "frame": 400
+        },
+        {
+          "eventId": "clarity-changed",
+          "message": "Your orientation is under informal review.",
+          "frame": 400
+        }
+      ]
+    },
+    "meeting": {
+      "id": "the-meeting",
+      "roomId": "conference",
+      "phase": "cooling",
+      "insideZone": false,
+      "exposureFrames": 0,
+      "activationCount": 1,
+      "escapeCount": 1,
+      "clarityApplied": true,
+      "objectPositions": [
+        {
+          "id": "meeting-chair-01",
+          "x": 19.095745086669922,
+          "z": -2.7492833137512207,
+          "rotationY": -1.5705602650983557
+        },
+        {
+          "id": "meeting-chair-02",
+          "x": 19.096908569335938,
+          "z": -1.5508511066436768,
+          "rotationY": -1.5706205157531272
+        },
+        {
+          "id": "meeting-chair-03",
+          "x": 19.098342895507812,
+          "z": 1.5465059280395508,
+          "rotationY": -1.5706566661459904
+        },
+        {
+          "id": "meeting-chair-04",
+          "x": 19.09937286376953,
+          "z": 2.7464611530303955,
+          "rotationY": -1.5707289669317168
+        },
+        {
+          "id": "meeting-chair-05",
+          "x": 13.604390144348145,
+          "z": -3.046595573425293,
+          "rotationY": -0.0001486182817705784
+        },
+        {
+          "id": "meeting-side-table",
+          "x": 15.002508163452148,
+          "z": -3.115457773208618,
+          "rotationY": -0.00012050130954371213
+        },
+        {
+          "id": "meeting-agenda",
+          "x": 16.54883575439453,
+          "z": -3.1554219722747803,
+          "rotationY": 0.00004217545834029927
+        }
+      ]
+    },
+    "nearestReportId": "IR-03",
+    "restartCount": 0,
+    "cameraPosition": {
+      "x": 9.45,
+      "y": 1.65,
+      "z": 0.8
+    },
+    "lastStatus": "Incident Report 02 filed. A meeting was scheduled without a time, room, or consenting calendar. Clarity variance detected. Please remain conceptually available."
+  },
+  "afterAllReports": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 3,
+      "collectedReportIds": [
+        "IR-01",
+        "IR-02",
+        "IR-03"
+      ],
+      "uncollectedReportIds": [],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": false
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": false
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": true,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 4.0132779619657555,
+        "near": false
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 80,
+        "baseline": 100,
+        "band": "revised",
+        "lastEventId": "incident-report-filed",
+        "lastMessage": "Clarity variance detected. Please remain conceptually available.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure",
+          "elevator-room-entry",
+          "locked-extraction-approach"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "Extraction approved. Please leave before the building reconsiders.",
+        "currentEventId": "extraction-approved",
+        "emissionCount": 15,
+        "blockedCount": 15,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          },
+          {
+            "eventId": "meeting-escaped",
+            "message": "The meeting has failed to reach you.",
+            "frame": 335
+          },
+          {
+            "eventId": "elevator-room-entered",
+            "message": "The elevator is experiencing a brief disagreement with verticality.",
+            "frame": 384
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 384
+          },
+          {
+            "eventId": "locked-extraction",
+            "message": "Your exit request has been received and emotionally misunderstood.",
+            "frame": 388
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 400
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 400
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 415
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 415
+          },
+          {
+            "eventId": "extraction-approved",
+            "message": "Extraction approved. Please leave before the building reconsiders.",
+            "frame": 415
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "idle",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 1,
+        "escapeCount": 1,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.098876953125,
+            "z": -2.7498109340667725,
+            "rotationY": -1.570755223595896
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.099184036254883,
+            "z": -1.5502245426177979,
+            "rotationY": -1.570765714474718
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.099563598632812,
+            "z": 1.5490782260894775,
+            "rotationY": -1.5707720090020116
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.099834442138672,
+            "z": 2.7490663528442383,
+            "rotationY": -1.5707845980565984
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.601158142089844,
+            "z": -3.0491018295288086,
+            "rotationY": -0.000025877501095171013
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15.000661849975586,
+            "z": -3.1188015937805176,
+            "rotationY": -0.000020981757644733245
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.549692153930664,
+            "z": -3.15879225730896,
+            "rotationY": 0.000007343615175656636
+          }
+        ]
+      },
+      "nearestReportId": null,
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 13.9,
+        "y": 1.65,
+        "z": 6.3
+      },
+      "lastStatus": "Extraction approved. Please leave before the building reconsiders."
+    },
+    "statusText": "Extraction approved. Please leave before the building reconsiders.",
+    "clarityText": "Clarity: 80%. orientation revised",
+    "narratorText": "Extraction approved. Please leave before the building reconsiders.",
+    "extractionText": "Extraction Elevator: available. Proceed to elevator. Distance 4.0"
+  },
+  "afterExtractionPrompt": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 3,
+      "collectedReportIds": [
+        "IR-01",
+        "IR-02",
+        "IR-03"
+      ],
+      "uncollectedReportIds": [],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": false
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": false
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": true,
+        "completed": false,
+        "requiredReportCount": 3,
+        "distance": 0,
+        "near": true
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 80,
+        "baseline": 100,
+        "band": "revised",
+        "lastEventId": "incident-report-filed",
+        "lastMessage": "Clarity variance detected. Please remain conceptually available.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure",
+          "elevator-room-entry",
+          "locked-extraction-approach"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "Extraction approved. Please leave before the building reconsiders.",
+        "currentEventId": "extraction-approved",
+        "emissionCount": 15,
+        "blockedCount": 15,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          },
+          {
+            "eventId": "meeting-escaped",
+            "message": "The meeting has failed to reach you.",
+            "frame": 335
+          },
+          {
+            "eventId": "elevator-room-entered",
+            "message": "The elevator is experiencing a brief disagreement with verticality.",
+            "frame": 384
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 384
+          },
+          {
+            "eventId": "locked-extraction",
+            "message": "Your exit request has been received and emotionally misunderstood.",
+            "frame": 388
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 400
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 400
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 415
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 415
+          },
+          {
+            "eventId": "extraction-approved",
+            "message": "Extraction approved. Please leave before the building reconsiders.",
+            "frame": 415
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "idle",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 1,
+        "escapeCount": 1,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.09970474243164,
+            "z": -2.7499501705169678,
+            "rotationY": -1.570789169882137
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.09978485107422,
+            "z": -1.550059199333191,
+            "rotationY": -1.5707909965600189
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.099884033203125,
+            "z": 1.5497567653656006,
+            "rotationY": -1.5707920925667485
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.099956512451172,
+            "z": 2.749753713607788,
+            "rotationY": -1.570794284580207
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.600305557250977,
+            "z": -3.0497629642486572,
+            "rotationY": -0.000004505805442995944
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15.000174522399902,
+            "z": -3.1196837425231934,
+            "rotationY": -0.000003653355764591304
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.54991912841797,
+            "z": -3.1596813201904297,
+            "rotationY": 0.0000012786745176069568
+          }
+        ]
+      },
+      "nearestReportId": null,
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 16,
+        "y": 1.65,
+        "z": 9.72
+      },
+      "lastStatus": "Extraction approved. Press E to file the audit before the building reconsiders."
+    },
+    "statusText": "Extraction approved. Press E to file the audit before the building reconsiders.",
+    "clarityText": "Clarity: 80%. orientation revised",
+    "narratorText": "Extraction approved. Please leave before the building reconsiders.",
+    "extractionText": "Extraction Elevator: available. Press E to file audit."
+  },
+  "afterInteractionWin": {
+    "debug": {
+      "ready": true,
+      "meshCount": 134,
+      "roomCount": 5,
+      "roomIds": [
+        "lobby",
+        "cubicles",
+        "conference",
+        "records",
+        "elevator"
+      ],
+      "connectionCount": 5,
+      "collisionBlockerCount": 84,
+      "dynamicCollisionBlockerCount": 12,
+      "wallCollisionProbeBlocked": true,
+      "doorwayProbeClearCount": 5,
+      "decorativeSignCount": 14,
+      "hasHud": true,
+      "reportTotal": 3,
+      "collectedReportCount": 3,
+      "collectedReportIds": [
+        "IR-01",
+        "IR-02",
+        "IR-03"
+      ],
+      "uncollectedReportIds": [],
+      "reportPositions": [
+        {
+          "id": "IR-01",
+          "roomId": "lobby",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645,
+          "visible": false
+        },
+        {
+          "id": "IR-02",
+          "roomId": "cubicles",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929,
+          "visible": false
+        },
+        {
+          "id": "IR-03",
+          "roomId": "elevator",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863,
+          "visible": false
+        }
+      ],
+      "extraction": {
+        "id": "elevator-extraction",
+        "roomId": "elevator",
+        "label": "Extraction Elevator",
+        "available": true,
+        "completed": true,
+        "requiredReportCount": 3,
+        "distance": 0,
+        "near": true
+      },
+      "decorativeSigns": [
+        {
+          "name": "lobby-label",
+          "x": 0,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "lobby-check-in-plaque",
+          "x": -1.2000000476837158,
+          "y": 0.9599999785423279,
+          "z": -0.8700000047683716
+        },
+        {
+          "name": "cubicles-label",
+          "x": 8,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": -3.9200000762939453,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "conference-screen",
+          "x": 16,
+          "y": 2.200000047683716,
+          "z": 3.9100000858306885,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "records-label",
+          "x": 4.079999923706055,
+          "y": 2.2799999713897705,
+          "z": 8,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "records-sign",
+          "x": 8,
+          "y": 2.3399999141693115,
+          "z": 11.779999732971191,
+          "width": 1.55,
+          "height": 0.42
+        },
+        {
+          "name": "elevator-label",
+          "x": 16,
+          "y": 2.2799999713897705,
+          "z": 11.920000076293945,
+          "width": 1.75,
+          "height": 0.44
+        },
+        {
+          "name": "sign-exit-request-pending",
+          "x": 16,
+          "y": 2.7200000286102295,
+          "z": 11.640000343322754,
+          "width": 1.85,
+          "height": 0.46
+        },
+        {
+          "name": "incident-report-ir-01",
+          "x": -1.2000000476837158,
+          "y": 1.0199999809265137,
+          "z": -0.4000000059604645
+        },
+        {
+          "name": "incident-report-ir-02",
+          "x": 9.449999809265137,
+          "y": 1,
+          "z": 0.800000011920929
+        },
+        {
+          "name": "incident-report-ir-03",
+          "x": 13.899999618530273,
+          "y": 1,
+          "z": 6.300000190734863
+        },
+        {
+          "name": "extraction-zone-marker",
+          "x": 16,
+          "y": 0.03500000014901161,
+          "z": 9.720000267028809
+        },
+        {
+          "name": "extraction-status-sign",
+          "x": 16,
+          "y": 2.240000009536743,
+          "z": 11.4399995803833,
+          "width": 1.55,
+          "height": 0.42
+        }
+      ],
+      "clarity": {
+        "value": 80,
+        "baseline": 100,
+        "band": "revised",
+        "lastEventId": "incident-report-filed",
+        "lastMessage": "Clarity variance detected. Please remain conceptually available.",
+        "appliedEventIds": [
+          "incident-report-filed",
+          "meeting-exposure",
+          "elevator-room-entry",
+          "locked-extraction-approach"
+        ]
+      },
+      "narrator": {
+        "currentMessage": "The company has marked your concern as partially received.",
+        "currentEventId": "extraction-complete",
+        "emissionCount": 16,
+        "blockedCount": 15,
+        "history": [
+          {
+            "eventId": "performance-review-pending",
+            "message": "Performance review pending.",
+            "frame": 0
+          },
+          {
+            "eventId": "report-collected",
+            "message": "You have collected evidence. Evidence has collected you back.",
+            "frame": 24
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 24
+          },
+          {
+            "eventId": "meeting-noticed",
+            "message": "Your attendance has been inferred.",
+            "frame": 177
+          },
+          {
+            "eventId": "meeting-reminder",
+            "message": "The chairs are aligning around a shared misunderstanding.",
+            "frame": 296
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 296
+          },
+          {
+            "eventId": "meeting-escaped",
+            "message": "The meeting has failed to reach you.",
+            "frame": 335
+          },
+          {
+            "eventId": "elevator-room-entered",
+            "message": "The elevator is experiencing a brief disagreement with verticality.",
+            "frame": 384
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Clarity variance detected. Please remain conceptually available.",
+            "frame": 384
+          },
+          {
+            "eventId": "locked-extraction",
+            "message": "Your exit request has been received and emotionally misunderstood.",
+            "frame": 388
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 400
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 400
+          },
+          {
+            "eventId": "report-collected",
+            "message": "Your paperwork has developed confidence.",
+            "frame": 415
+          },
+          {
+            "eventId": "clarity-changed",
+            "message": "Your orientation is under informal review.",
+            "frame": 415
+          },
+          {
+            "eventId": "extraction-approved",
+            "message": "Extraction approved. Please leave before the building reconsiders.",
+            "frame": 415
+          },
+          {
+            "eventId": "extraction-complete",
+            "message": "The company has marked your concern as partially received.",
+            "frame": 445
+          }
+        ]
+      },
+      "meeting": {
+        "id": "the-meeting",
+        "roomId": "conference",
+        "phase": "idle",
+        "insideZone": false,
+        "exposureFrames": 0,
+        "activationCount": 1,
+        "escapeCount": 1,
+        "clarityApplied": true,
+        "objectPositions": [
+          {
+            "id": "meeting-chair-01",
+            "x": 19.09992218017578,
+            "z": -2.7499868869781494,
+            "rotationY": -1.5707950806291116
+          },
+          {
+            "id": "meeting-chair-02",
+            "x": 19.099943161010742,
+            "z": -1.5500156879425049,
+            "rotationY": -1.57079539869132
+          },
+          {
+            "id": "meeting-chair-03",
+            "x": 19.0999698638916,
+            "z": 1.5499358177185059,
+            "rotationY": -1.5707955895286445
+          },
+          {
+            "id": "meeting-chair-04",
+            "x": 19.09998893737793,
+            "z": 2.7499349117279053,
+            "rotationY": -1.5707959712032948
+          },
+          {
+            "id": "meeting-chair-05",
+            "x": 13.600080490112305,
+            "z": -3.0499374866485596,
+            "rotationY": -7.845534472383994e-7
+          },
+          {
+            "id": "meeting-side-table",
+            "x": 15.000045776367188,
+            "z": -3.1199166774749756,
+            "rotationY": -6.361244166797832e-7
+          },
+          {
+            "id": "meeting-agenda",
+            "x": 16.549978256225586,
+            "z": -3.1599159240722656,
+            "rotationY": 2.226435458379241e-7
+          }
+        ]
+      },
+      "nearestReportId": null,
+      "restartCount": 0,
+      "cameraPosition": {
+        "x": 16,
+        "y": 1.65,
+        "z": 9.72
+      },
+      "lastStatus": "Audit filed. The building has marked your concerns as partially received."
+    },
+    "statusText": "Audit filed. The building has marked your concerns as partially received.",
+    "clarityText": "Clarity: 80%. orientation revised",
+    "narratorText": "The company has marked your concern as partially received.",
+    "extractionText": "Extraction Elevator: audit filed. Audit filed. R restarts the audit."
+  },
+  "debug": {
+    "ready": true,
+    "meshCount": 134,
+    "roomCount": 5,
+    "roomIds": [
+      "lobby",
+      "cubicles",
+      "conference",
+      "records",
+      "elevator"
+    ],
+    "connectionCount": 5,
+    "collisionBlockerCount": 84,
+    "dynamicCollisionBlockerCount": 12,
+    "wallCollisionProbeBlocked": true,
+    "doorwayProbeClearCount": 5,
+    "decorativeSignCount": 14,
+    "hasHud": true,
+    "reportTotal": 3,
+    "collectedReportCount": 0,
+    "collectedReportIds": [],
+    "uncollectedReportIds": [
+      "IR-01",
+      "IR-02",
+      "IR-03"
+    ],
+    "reportPositions": [
+      {
+        "id": "IR-01",
+        "roomId": "lobby",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645,
+        "visible": true
+      },
+      {
+        "id": "IR-02",
+        "roomId": "cubicles",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929,
+        "visible": true
+      },
+      {
+        "id": "IR-03",
+        "roomId": "elevator",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863,
+        "visible": true
+      }
+    ],
+    "extraction": {
+      "id": "elevator-extraction",
+      "roomId": "elevator",
+      "label": "Extraction Elevator",
+      "available": false,
+      "completed": false,
+      "requiredReportCount": 3,
+      "distance": 20.193622755711765,
+      "near": false
+    },
+    "decorativeSigns": [
+      {
+        "name": "lobby-label",
+        "x": 0,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "lobby-check-in-plaque",
+        "x": -1.2000000476837158,
+        "y": 0.9599999785423279,
+        "z": -0.8700000047683716
+      },
+      {
+        "name": "cubicles-label",
+        "x": 8,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": -3.9200000762939453,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "conference-screen",
+        "x": 16,
+        "y": 2.200000047683716,
+        "z": 3.9100000858306885,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "records-label",
+        "x": 4.079999923706055,
+        "y": 2.2799999713897705,
+        "z": 8,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "records-sign",
+        "x": 8,
+        "y": 2.3399999141693115,
+        "z": 11.779999732971191,
+        "width": 1.55,
+        "height": 0.42
+      },
+      {
+        "name": "elevator-label",
+        "x": 16,
+        "y": 2.2799999713897705,
+        "z": 11.920000076293945,
+        "width": 1.75,
+        "height": 0.44
+      },
+      {
+        "name": "sign-exit-request-pending",
+        "x": 16,
+        "y": 2.7200000286102295,
+        "z": 11.640000343322754,
+        "width": 1.85,
+        "height": 0.46
+      },
+      {
+        "name": "incident-report-ir-01",
+        "x": -1.2000000476837158,
+        "y": 1.0199999809265137,
+        "z": -0.4000000059604645
+      },
+      {
+        "name": "incident-report-ir-02",
+        "x": 9.449999809265137,
+        "y": 1,
+        "z": 0.800000011920929
+      },
+      {
+        "name": "incident-report-ir-03",
+        "x": 13.899999618530273,
+        "y": 1,
+        "z": 6.300000190734863
+      },
+      {
+        "name": "extraction-zone-marker",
+        "x": 16,
+        "y": 0.03500000014901161,
+        "z": 9.720000267028809
+      },
+      {
+        "name": "extraction-status-sign",
+        "x": 16,
+        "y": 2.240000009536743,
+        "z": 11.4399995803833,
+        "width": 1.55,
+        "height": 0.42
+      }
+    ],
+    "clarity": {
+      "value": 100,
+      "baseline": 100,
+      "band": "baseline",
+      "lastEventId": null,
+      "lastMessage": "Clarity restored to company baseline.",
+      "appliedEventIds": []
+    },
+    "narrator": {
+      "currentMessage": "Performance review restarted. Previous certainty has been archived.",
+      "currentEventId": "restart",
+      "emissionCount": 2,
+      "blockedCount": 0,
+      "history": [
+        {
+          "eventId": "performance-review-pending",
+          "message": "Performance review pending.",
+          "frame": 0
+        },
+        {
+          "eventId": "restart",
+          "message": "Performance review restarted. Previous certainty has been archived.",
+          "frame": 0
+        }
+      ]
+    },
+    "meeting": {
+      "id": "the-meeting",
+      "roomId": "conference",
+      "phase": "idle",
+      "insideZone": false,
+      "exposureFrames": 0,
+      "activationCount": 0,
+      "escapeCount": 0,
+      "clarityApplied": false,
+      "objectPositions": [
+        {
+          "id": "meeting-chair-01",
+          "x": 19.100000381469727,
+          "z": -2.75,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-02",
+          "x": 19.100000381469727,
+          "z": -1.5499999523162842,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-03",
+          "x": 19.100000381469727,
+          "z": 1.5499999523162842,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-04",
+          "x": 19.100000381469727,
+          "z": 2.75,
+          "rotationY": -1.5707963267948966
+        },
+        {
+          "id": "meeting-chair-05",
+          "x": 13.600000381469727,
+          "z": -3.049999952316284,
+          "rotationY": 0
+        },
+        {
+          "id": "meeting-side-table",
+          "x": 15,
+          "z": -3.119999885559082,
+          "rotationY": 0
+        },
+        {
+          "id": "meeting-agenda",
+          "x": 16.549999237060547,
+          "z": -3.1600000858306885,
+          "rotationY": 0
+        }
+      ]
+    },
+    "nearestReportId": "IR-01",
+    "restartCount": 1,
+    "cameraPosition": {
+      "x": 0,
+      "y": 1.65,
+      "z": -2.6
+    },
+    "lastStatus": "Clarity restored to company baseline. Evidence has been reissued."
+  },
+  "movementObserved": true,
+  "traversalObserved": true,
+  "traversalPosition": {
+    "x": 3.540240000008047,
+    "y": 1.65,
+    "z": -1.3002199999839064
+  },
+  "connectedRoomTraversalObserved": true,
+  "consoleMessages": [],
+  "pageErrors": [],
+  "server": "vite createServer API on 127.0.0.1:5174"
+}

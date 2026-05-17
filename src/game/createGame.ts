@@ -17,6 +17,10 @@ import {
   resetGameState
 } from "./gameState";
 import { createHud } from "./hud";
+import { createMeetingHazard } from "./meeting/createMeetingHazard";
+import { getMeetingHudInfo } from "./meeting/meetingState";
+import type { MeetingHazardController } from "./meeting/meetingTypes";
+import { updateMeetingHazard } from "./meeting/updateMeetingHazard";
 import { createMovementCollision } from "./navigation/collision";
 import { emitNarrator, tickNarrator } from "./narrator/updateNarrator";
 import { createOfficeScene } from "./officeScene";
@@ -30,6 +34,7 @@ interface DebugState {
   roomIds: string[];
   connectionCount: number;
   collisionBlockerCount: number;
+  dynamicCollisionBlockerCount: number;
   wallCollisionProbeBlocked: boolean;
   doorwayProbeClearCount: number;
   decorativeSignCount: number;
@@ -49,7 +54,18 @@ interface DebugState {
     distance: number;
     near: boolean;
   };
-  decorativeSigns: Array<{ name: string; x: number; y: number; z: number; width?: number; height?: number }>;
+  decorativeSigns: Array<{
+    name: string;
+    kind?: string;
+    x: number;
+    y: number;
+    z: number;
+    width?: number;
+    height?: number;
+    wallOffsetApplied?: number;
+    facingNormal?: { x: number; y: number; z: number };
+    backFaceCulling?: boolean;
+  }>;
   clarity: {
     value: number;
     baseline: number;
@@ -65,6 +81,18 @@ interface DebugState {
     blockedCount: number;
     history: Array<{ eventId: string; message: string; frame: number }>;
   };
+  meeting: {
+    id: string;
+    roomId: string;
+    phase: string;
+    insideZone: boolean;
+    exposureFrames: number;
+    activationCount: number;
+    escapeCount: number;
+    clarityApplied: boolean;
+    objectPositions: Array<{ id: string; x: number; z: number; rotationY: number }>;
+  };
+  currentRoomId: string | null;
   nearestReportId: string | null;
   restartCount: number;
   cameraPosition: { x: number; y: number; z: number };
@@ -101,6 +129,7 @@ export function createGame(root: HTMLElement): void {
   const extractionZone = createExtractionZone(scene, office.root);
   const state = createInitialGameState(incidentReports.total);
   const collision = createMovementCollision(scene);
+  const meetingHazard = createMeetingHazard(scene, office.root, state.meeting, collision);
   const player = createPlayer(scene, canvas, collision);
   let extractionUseRequested = false;
   window.__TBIF_PROOF_CAMERA__ = (position, target) => {
@@ -110,6 +139,7 @@ export function createGame(root: HTMLElement): void {
 
   const restart = () => {
     resetGameState(state);
+    meetingHazard.reset();
     player.reset();
     incidentReports.reset();
     extractionZone.setAvailability("locked");
@@ -159,6 +189,21 @@ export function createGame(root: HTMLElement): void {
       }
     }
 
+    const meetingUpdate = updateMeetingHazard(meetingHazard, player.camera.position);
+    if (meetingUpdate.statusMessage) {
+      state.status = meetingUpdate.statusMessage;
+    }
+    if (meetingUpdate.narratorEventId) {
+      emitNarrator(state.narrator, meetingUpdate.narratorEventId);
+    }
+    if (meetingUpdate.clarityEventId) {
+      const clarityChange = applyClarityEvent(state.clarity, meetingUpdate.clarityEventId);
+      if (clarityChange.changed) {
+        state.status = `${state.status} ${clarityChange.message}`;
+        emitNarrator(state.narrator, "clarity-changed", { force: true });
+      }
+    }
+
     const extractionWasAvailable = state.extractionAvailable;
     const extractionAvailable = refreshExtractionAvailability(state);
 
@@ -194,9 +239,10 @@ export function createGame(root: HTMLElement): void {
       player.camera.position,
       incidentReports.getHudInfo(player.camera.position),
       getClarityHudInfo(state.clarity),
+      getMeetingHudInfo(state.meeting, player.camera.position),
       getExtractionHudInfo(extractionZone, player.camera.position, state)
     );
-    updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone);
+    updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone, meetingHazard);
   });
 
   engine.runRenderLoop(() => {
@@ -207,7 +253,7 @@ export function createGame(root: HTMLElement): void {
     engine.resize();
   });
 
-  updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone);
+  updateDebugState(scene, state, player.camera.position, office, collision, incidentReports, extractionZone, meetingHazard);
 }
 
 function updateDebugState(
@@ -217,10 +263,12 @@ function updateDebugState(
   office: ReturnType<typeof createOfficeScene>,
   collision: ReturnType<typeof createMovementCollision>,
   incidentReports: IncidentReportCollection,
-  extractionZone: ExtractionZone
+  extractionZone: ExtractionZone,
+  meetingHazard: MeetingHazardController
 ): void {
   const nearestReport = incidentReports.getNearestUncollected(cameraPosition);
   const extractionDistance = extractionZone.distanceTo(cameraPosition);
+  const meetingHudInfo = getMeetingHudInfo(state.meeting, cameraPosition);
 
   window.__TBIF_DEBUG__ = {
     ready: true,
@@ -229,12 +277,13 @@ function updateDebugState(
     roomIds: office.roomIds,
     connectionCount: office.connectionCount,
     collisionBlockerCount: collision.blockerCount,
+    dynamicCollisionBlockerCount: collision.dynamicBlockerCount,
     wallCollisionProbeBlocked: collision.blocksPosition(new Vector3(0, 1.65, -4.02)),
     doorwayProbeClearCount: office.doorwayProbePositions.filter((position) => {
       return !collision.blocksPosition(new Vector3(position.x, 1.65, position.z));
     }).length,
     decorativeSignCount: scene.meshes.filter((mesh) => {
-      return mesh.metadata?.collision === "intentionally-non-collidable";
+      return mesh.metadata?.kind === "decorative-sign";
     }).length,
     hasHud: Boolean(document.querySelector(".hud")),
     reportTotal: incidentReports.total,
@@ -265,16 +314,20 @@ function updateDebugState(
       near: extractionZone.contains(cameraPosition)
     },
     decorativeSigns: scene.meshes
-      .filter((mesh) => mesh.metadata?.collision === "intentionally-non-collidable")
+      .filter((mesh) => mesh.metadata?.kind === "decorative-sign")
       .map((mesh) => {
         const position = mesh.getAbsolutePosition();
         return {
           name: mesh.name,
+          kind: mesh.metadata?.kind,
           x: position.x,
           y: position.y,
           z: position.z,
           width: mesh.metadata?.width,
-          height: mesh.metadata?.height
+          height: mesh.metadata?.height,
+          wallOffsetApplied: mesh.metadata?.wallOffsetApplied,
+          facingNormal: mesh.metadata?.facingNormal,
+          backFaceCulling: mesh.material?.backFaceCulling
         };
       }),
     clarity: {
@@ -292,6 +345,23 @@ function updateDebugState(
       blockedCount: state.narrator.blockedCount,
       history: state.narrator.history.map((entry) => ({ ...entry }))
     },
+    meeting: {
+      id: meetingHazard.definition.id,
+      roomId: meetingHazard.definition.roomId,
+      phase: state.meeting.phase,
+      insideZone: meetingHudInfo.insideZone,
+      exposureFrames: state.meeting.exposureFrames,
+      activationCount: state.meeting.activationCount,
+      escapeCount: state.meeting.escapeCount,
+      clarityApplied: state.meeting.clarityApplied,
+      objectPositions: meetingHazard.objects.map((object) => ({
+        id: object.id,
+        x: object.node.getAbsolutePosition().x,
+        z: object.node.getAbsolutePosition().z,
+        rotationY: object.node.rotation.y
+      }))
+    },
+    currentRoomId: getCurrentRoomId(cameraPosition),
     nearestReportId: nearestReport?.definition.id ?? null,
     restartCount: state.restartCount,
     cameraPosition: {
@@ -341,12 +411,12 @@ function getExtractionActionText(distance: number, near: boolean, state: ReturnT
   }
 
   if (state.extractionAvailable) {
-    return `Proceed to elevator. Distance ${distance.toFixed(1)}`;
+    return `Proceed to Complete Check-Out. Distance ${distance.toFixed(1)}`;
   }
 
   if (near) {
     return "Reports still required.";
   }
 
-  return `Locked. Distance ${distance.toFixed(1)}`;
+  return `Check-Out pending. Distance ${distance.toFixed(1)}`;
 }

@@ -3,6 +3,7 @@ import type { ClarityHudInfo } from "./clarity/clarityTypes";
 import type { IncidentReportHudInfo } from "./collectibles/collectibleTypes";
 import type { ExtractionHudInfo } from "./extraction/extractionTypes";
 import type { GameState } from "./gameState";
+import type { MeetingHudInfo } from "./meeting/meetingTypes";
 
 export interface HudController {
   update: (
@@ -10,6 +11,7 @@ export interface HudController {
     cameraPosition: Vector3,
     reports: IncidentReportHudInfo,
     clarity: ClarityHudInfo,
+    meeting: MeetingHudInfo,
     extraction: ExtractionHudInfo
   ) => void;
 }
@@ -27,6 +29,7 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
       <section class="hud-panel hud-metrics">
         <div class="hud-metric" data-hud-report></div>
         <div class="hud-metric" data-hud-clarity></div>
+        <div class="hud-metric" data-hud-meeting></div>
         <div class="hud-metric" data-hud-extraction></div>
         <div class="hud-metric" data-hud-location></div>
       </section>
@@ -34,7 +37,7 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
       <div class="crosshair" aria-hidden="true"></div>
     <div class="hud-bottom">
       <div class="hud-panel hud-help">
-        WASD to audit. Mouse to look. Approach Incident Reports to file them. Press E at approved extraction. R restarts.
+        WASD to audit. Mouse to look. Approach Incident Reports to file them. Press E at approved Complete Check-Out. R restarts.
       </div>
       <button class="restart-button" type="button">Restart Audit</button>
     </div>
@@ -46,11 +49,12 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
   const narrator = hud.querySelector<HTMLElement>("[data-hud-narrator]");
   const report = hud.querySelector<HTMLElement>("[data-hud-report]");
   const clarity = hud.querySelector<HTMLElement>("[data-hud-clarity]");
+  const meeting = hud.querySelector<HTMLElement>("[data-hud-meeting]");
   const extraction = hud.querySelector<HTMLElement>("[data-hud-extraction]");
   const location = hud.querySelector<HTMLElement>("[data-hud-location]");
   const restartButton = hud.querySelector<HTMLButtonElement>(".restart-button");
 
-  if (!status || !narrator || !report || !clarity || !extraction || !location || !restartButton) {
+  if (!status || !narrator || !report || !clarity || !meeting || !extraction || !location || !restartButton) {
     throw new Error("HUD failed to initialize.");
   }
 
@@ -63,7 +67,7 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
   });
 
   return {
-    update: (state, cameraPosition, reports, clarityInfo, extractionInfo) => {
+    update: (state, cameraPosition, reports, clarityInfo, meetingInfo, extractionInfo) => {
       status.textContent = state.status;
       narrator.textContent = state.narrator.currentMessage;
       const nearest = reports.nearestDistance === null || reports.nearestLabel === null
@@ -71,9 +75,13 @@ export function createHud(root: HTMLElement, onRestart: () => void): HudControll
         : `${reports.nearestLabel}: ${reports.nearestDistance < 2.4 ? "nearby" : "pending"}`;
       report.textContent = `Incident Reports: ${reports.collected} / ${reports.total}. ${nearest}`;
       clarity.textContent = `${clarityInfo.label}. ${clarityInfo.note}`;
-      const extractionLabel = extractionInfo.availability === "complete"
-        ? `${extractionInfo.label}: audit filed`
-        : `${extractionInfo.label}: ${extractionInfo.availability}`;
+      meeting.textContent = `${meetingInfo.label}: ${meetingInfo.phase}. ${meetingInfo.actionText}`;
+      const checkOutState = extractionInfo.availability === "complete"
+        ? "audit filed"
+        : extractionInfo.availability === "available"
+          ? "approved"
+          : "pending";
+      const extractionLabel = `${extractionInfo.label}: ${checkOutState}`;
       extraction.textContent = `${extractionLabel}. ${extractionInfo.actionText}`;
       location.textContent = `Auditor position: ${cameraPosition.x.toFixed(1)}, ${cameraPosition.z.toFixed(1)}`;
     }

@@ -7,7 +7,10 @@ export type NarratorEventId =
   | "extraction-complete"
   | "restart"
   | "records-room-entered"
-  | "elevator-room-entered";
+  | "elevator-room-entered"
+  | "meeting-noticed"
+  | "meeting-reminder"
+  | "meeting-escaped";
 
 export interface NarratorMessageDefinition {
   eventId: NarratorEventId;

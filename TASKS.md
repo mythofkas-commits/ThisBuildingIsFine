@@ -2,7 +2,7 @@
 
 ## Current Task
 
-Current milestone: M6 - Performance Review narrator system.
+Current milestone: M8 - First complete 5-room run.
 
 Status: Complete as of 2026-05-16.
 
@@ -24,11 +24,17 @@ M5 completed on 2026-05-16: added source-driven Clarity state, HUD Clarity displ
 
 M6 completed on 2026-05-16: added a source-driven Performance Review narrator, calm bureaucratic message pools, HUD narrator line, event cooldowns, smoke proof, and stability coverage while preserving M1-M5 contracts.
 
+M7 completed on 2026-05-16: added The Meeting as a source-driven conference-room spatial hazard with procedural office objects, dynamic collision pressure, HUD/status/narrator feedback, subtle one-time Clarity exposure, escape behavior, smoke proof, and stability coverage while preserving M1-M6 contracts.
+
+M8 completed on 2026-05-17: integrated the first complete five-room run with source-driven wayfinding, File Audit / Complete Check-Out player-facing wording, full-run smoke proof across lobby, cubicles, conference, records, and elevator, and verification coverage for reports, Clarity, narrator, The Meeting, audit filing, and restart.
+
+M8.1 corrective patch completed on 2026-05-17: fixed wall-sign z-fighting and mirrored/backface readability by offsetting wall signs from surfaces, culling sign backfaces, correcting east/west sign rotations, and adding sign-readability smoke/validation proof while preserving the M8 complete run.
+
 ## Next Task
 
-Next milestone: M7 - The Meeting hazard.
+Next milestone: M9 - AI-generated visual assets/textures.
 
-When approved for M7, add The Meeting hazard. Do not add AI assets, enemies, combat, inventory, multiplayer, voice audio, text-to-speech, jumpscares, gore, dark horror lighting, or chase behavior.
+When approved for M9, introduce AI-generated visual assets/textures through the approved asset pipeline. Do not add enemies, combat, inventory, multiplayer, voice audio, text-to-speech, jumpscares, gore, dark horror lighting, or chase behavior.
 
 Every future milestone must run `npm run verify` before claiming pass. If a milestone intentionally changes a locked behavior contract, update `STABILITY.md`, the relevant validation/smoke checks, and the milestone log with the reason.
 
@@ -219,25 +225,55 @@ Verification command or proof:
 
 ### M7 - The Meeting Hazard
 
+Status: Complete.
+
 Acceptance criteria:
-- A self-scheduling conference-room event can occur.
-- Chairs, tables, agendas, or projector screens rearrange around the player.
-- Hazard creates spatial/puzzle pressure.
-- No monster, chase, gore, jump scare, or panic horror behavior.
+- A self-scheduling conference-room event can occur. Complete.
+- Chairs, tables, agendas, or projector screens rearrange around the player. Complete: procedural chairs, a side table, and an agenda panel rearrange in the conference room.
+- Hazard creates spatial/puzzle pressure. Complete: dynamic collision blockers form a partial pressure shape while leaving escape paths.
+- No monster, chase, gore, jump scare, or panic horror behavior. Complete.
 
 Verification command or proof:
-- Build passes.
-- Browser screenshot sequence or playtest notes prove hazard behavior.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m7-smoke.json`
+- `.logs/m7-smoke.png`
+- `.logs/m7-reports-before.png`
+- `.logs/m7-meeting.png`
+- `.logs/m7-records-signage.png`
+- `.logs/m7.md`
 
 ### M8 - First Complete 5-Room Run
 
+Status: Complete. M8.1 corrective patch complete.
+
 Acceptance criteria:
-- Player can complete a full five-room run.
-- Reports, Clarity, Performance Review, The Meeting, elevator extraction, win, fail, and restart all work together.
+- Player can complete a full five-room run. Complete: smoke records lobby, cubicles, conference, records, and elevator in the run path before restart.
+- Reports, Clarity, Performance Review, The Meeting, File Audit completion, and restart all work together. Complete.
+- Player-facing end-loop wording prefers File Audit / Complete Check-Out. Complete.
+- No new rooms, hazards, enemies, combat, inventory, generated assets, or M9+ systems are added. Complete.
 
 Verification command or proof:
-- Build passes.
-- Browser smoke test completes a run.
+- `npm run check`
+- `npm run build`
+- `npm run validate`
+- `npm run smoke`
+- `npm run verify`
+- `.logs/m8-smoke.json`
+- `.logs/m8-smoke.png`
+- `.logs/m8-reports-before.png`
+- `.logs/m8-meeting.png`
+- `.logs/m8-records-signage.png`
+- `.logs/m8.md`
+- `.logs/m8-1-smoke.json`
+- `.logs/m8-1-smoke.png`
+- `.logs/m8-1-reports-before.png`
+- `.logs/m8-1-meeting.png`
+- `.logs/m8-1-signage.png`
+- `.logs/m8-1.md`
 
 ### M9 - AI-Generated Visual Assets/Textures
 
